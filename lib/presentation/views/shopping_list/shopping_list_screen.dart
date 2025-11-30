@@ -460,7 +460,7 @@ class _EmptyListWidget extends StatelessWidget {
           ),
           const SizedBox(height: AppConstants.largePadding),
           const Text(
-            AppStrings.appName,
+            AppStrings.byDeveloper,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
