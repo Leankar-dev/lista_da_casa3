@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 
-/// Custom Neumorphic Checkbox
 class NeumorphicCheckbox extends StatelessWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
@@ -63,7 +62,6 @@ class NeumorphicCheckbox extends StatelessWidget {
   }
 }
 
-/// Neumorphic Radio Button
 class NeumorphicRadio<T> extends StatelessWidget {
   final T value;
   final T? groupValue;
@@ -131,7 +129,6 @@ class NeumorphicRadio<T> extends StatelessWidget {
   }
 }
 
-/// Neumorphic Switch
 class NeumorphicSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;

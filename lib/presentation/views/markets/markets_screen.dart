@@ -11,7 +11,6 @@ import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/loading_indicator.dart';
 import 'add_edit_market_screen.dart';
 
-/// Markets Screen
 class MarketsScreen extends ConsumerWidget {
   const MarketsScreen({super.key});
 
@@ -133,7 +132,6 @@ class _MarketTile extends StatelessWidget {
           onTap: onEdit,
           child: Row(
             children: [
-              // Store Icon
               Neumorphic(
                 style: NeumorphicStyle(
                   depth: -4,
@@ -151,7 +149,6 @@ class _MarketTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppConstants.defaultPadding),
-              // Market Details
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +192,6 @@ class _MarketTile extends StatelessWidget {
                   ],
                 ),
               ),
-              // Edit Icon
               Icon(
                 Icons.edit_outlined,
                 color: AppColors.textSecondary.withValues(alpha: 0.6),

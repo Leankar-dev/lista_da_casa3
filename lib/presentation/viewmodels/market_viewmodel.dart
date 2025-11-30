@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 import '../../core/di/injection.dart';
 import '../../domain/entities/market.dart';
 
-/// Market State
 class MarketState {
   final List<Market> markets;
   final bool isLoading;
@@ -28,7 +27,6 @@ class MarketState {
   }
 }
 
-/// Market ViewModel
 class MarketViewModel extends StateNotifier<MarketState> {
   final Ref _ref;
   static const _uuid = Uuid();
@@ -91,7 +89,6 @@ class MarketViewModel extends StateNotifier<MarketState> {
   }
 }
 
-/// Market Provider
 final marketViewModelProvider =
     StateNotifierProvider<MarketViewModel, MarketState>((ref) {
       return MarketViewModel(ref);

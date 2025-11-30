@@ -7,7 +7,6 @@ import '../../models/market_model.dart';
 import 'firebase_auth_service.dart';
 import 'firestore_service.dart';
 
-/// Sync Service - Handles cloud synchronization
 class SyncService {
   final FirebaseAuthService _authService;
   final FirestoreService _firestoreService;
@@ -24,16 +23,12 @@ class SyncService {
        _shoppingListRepository = shoppingListRepository,
        _marketRepository = marketRepository;
 
-  /// Check if Firebase is available
   bool get isFirebaseAvailable => _authService.isFirebaseAvailable;
 
-  /// Check if user is authenticated
   bool get isAuthenticated => _authService.isAuthenticated;
 
-  /// Get current user ID
   String? get userId => _authService.currentUser?.uid;
 
-  /// Sync history to cloud
   Future<void> syncHistoryToCloud() async {
     if (!isFirebaseAvailable) return;
     if (!isAuthenticated || userId == null) {
@@ -48,7 +43,6 @@ class SyncService {
     await _firestoreService.syncHistoryToCloud(userId!, historyModels);
   }
 
-  /// Sync markets to cloud
   Future<void> syncMarketsToCloud() async {
     if (!isFirebaseAvailable) return;
     if (!isAuthenticated || userId == null) {
@@ -63,14 +57,12 @@ class SyncService {
     await _firestoreService.syncMarketsToCloud(userId!, marketModels);
   }
 
-  /// Sync all data to cloud
   Future<void> syncAllToCloud() async {
     if (!isFirebaseAvailable) return;
     await syncHistoryToCloud();
     await syncMarketsToCloud();
   }
 
-  /// Download history from cloud
   Future<List<ShoppingList>> downloadHistoryFromCloud() async {
     if (!isFirebaseAvailable) return [];
     if (!isAuthenticated || userId == null) {
@@ -81,7 +73,6 @@ class SyncService {
     return historyModels.map((model) => model.toEntity()).toList();
   }
 
-  /// Download markets from cloud
   Future<List<Market>> downloadMarketsFromCloud() async {
     if (!isFirebaseAvailable) return [];
     if (!isAuthenticated || userId == null) {

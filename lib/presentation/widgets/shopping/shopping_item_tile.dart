@@ -5,7 +5,6 @@ import '../../../core/utils/formatters.dart';
 import '../../../domain/entities/shopping_item.dart';
 import '../../../domain/entities/category.dart';
 
-/// Shopping Item Tile Widget
 class ShoppingItemTile extends StatelessWidget {
   final ShoppingItem item;
   final VoidCallback? onToggle;
@@ -67,14 +66,12 @@ class ShoppingItemTile extends StatelessWidget {
               padding: const EdgeInsets.all(AppConstants.defaultPadding),
               child: Row(
                 children: [
-                  // Checkbox
                   _NeumorphicCheckbox(
                     value: item.isPurchased,
                     onChanged: (_) => onToggle?.call(),
                     color: category?.color ?? AppColors.primary,
                   ),
                   const SizedBox(width: AppConstants.defaultPadding),
-                  // Item Details
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +129,6 @@ class ShoppingItemTile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Total Price
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [

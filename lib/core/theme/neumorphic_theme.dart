@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_constants.dart';
 
-/// Neumorphic Theme Configuration
 class NeumorphicThemeConfig {
   static NeumorphicThemeData get lightTheme {
     return const NeumorphicThemeData(
@@ -28,7 +27,6 @@ class NeumorphicThemeConfig {
     );
   }
 
-  // Common Neumorphic Styles
   static NeumorphicStyle get cardStyle {
     return NeumorphicStyle(
       depth: AppConstants.neumorphicDepth,

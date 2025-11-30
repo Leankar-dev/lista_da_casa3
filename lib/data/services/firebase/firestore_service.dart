@@ -4,12 +4,10 @@ import '../../../core/constants/app_constants.dart';
 import '../../models/shopping_list_model.dart';
 import '../../models/market_model.dart';
 
-/// Firestore Service for cloud storage
 class FirestoreService {
   FirebaseFirestore? _firestore;
   bool _isInitialized = false;
 
-  /// Initialize Firestore (call after Firebase.initializeApp)
   void _ensureInitialized() {
     if (!_isInitialized) {
       try {
@@ -23,13 +21,11 @@ class FirestoreService {
     }
   }
 
-  /// Check if Firestore is available
   bool get isFirestoreAvailable {
     _ensureInitialized();
     return _isInitialized && _firestore != null;
   }
 
-  /// Get user's shopping history collection reference
   CollectionReference<Map<String, dynamic>>? _getHistoryRef(String userId) {
     _ensureInitialized();
     return _firestore
@@ -38,7 +34,6 @@ class FirestoreService {
         .collection(AppConstants.historyCollection);
   }
 
-  /// Get user's markets collection reference
   CollectionReference<Map<String, dynamic>>? _getMarketsRef(String userId) {
     _ensureInitialized();
     return _firestore
@@ -47,9 +42,6 @@ class FirestoreService {
         .collection(AppConstants.marketsCollection);
   }
 
-  // Shopping History Operations
-
-  /// Save shopping list to history in cloud
   Future<void> saveShoppingListToCloud(
     String userId,
     ShoppingListModel list,
@@ -59,7 +51,6 @@ class FirestoreService {
     await ref.doc(list.id).set(list.toJson());
   }
 
-  /// Get all shopping history from cloud
   Future<List<ShoppingListModel>> getHistoryFromCloud(String userId) async {
     final ref = _getHistoryRef(userId);
     if (ref == null) return [];
@@ -69,14 +60,12 @@ class FirestoreService {
         .toList();
   }
 
-  /// Delete shopping list from cloud
   Future<void> deleteShoppingListFromCloud(String userId, String listId) async {
     final ref = _getHistoryRef(userId);
     if (ref == null) return;
     await ref.doc(listId).delete();
   }
 
-  /// Sync all history to cloud
   Future<void> syncHistoryToCloud(
     String userId,
     List<ShoppingListModel> lists,
@@ -94,16 +83,12 @@ class FirestoreService {
     await batch.commit();
   }
 
-  // Markets Operations
-
-  /// Save market to cloud
   Future<void> saveMarketToCloud(String userId, MarketModel market) async {
     final ref = _getMarketsRef(userId);
     if (ref == null) return;
     await ref.doc(market.id).set(market.toJson());
   }
 
-  /// Get all markets from cloud
   Future<List<MarketModel>> getMarketsFromCloud(String userId) async {
     final ref = _getMarketsRef(userId);
     if (ref == null) return [];
@@ -113,14 +98,12 @@ class FirestoreService {
         .toList();
   }
 
-  /// Delete market from cloud
   Future<void> deleteMarketFromCloud(String userId, String marketId) async {
     final ref = _getMarketsRef(userId);
     if (ref == null) return;
     await ref.doc(marketId).delete();
   }
 
-  /// Sync all markets to cloud
   Future<void> syncMarketsToCloud(
     String userId,
     List<MarketModel> markets,

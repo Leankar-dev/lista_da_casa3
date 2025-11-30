@@ -3,7 +3,6 @@ import '../../core/di/injection.dart';
 import '../../domain/entities/shopping_list.dart';
 import '../../domain/entities/category.dart';
 
-/// History State
 class HistoryState {
   final List<ShoppingList> history;
   final bool isLoading;
@@ -35,7 +34,6 @@ class HistoryState {
   }
 }
 
-/// History ViewModel
 class HistoryViewModel extends StateNotifier<HistoryState> {
   final Ref _ref;
 
@@ -72,7 +70,6 @@ class HistoryViewModel extends StateNotifier<HistoryState> {
     state = state.copyWith(error: null);
   }
 
-  /// Get spending data for charts
   Map<String, double> getSpendingByMonth() {
     final Map<String, double> result = {};
     for (final list in state.history) {
@@ -84,12 +81,10 @@ class HistoryViewModel extends StateNotifier<HistoryState> {
     return result;
   }
 
-  /// Get spending by category
   Map<String, double> getSpendingByCategory() {
     final Map<String, double> result = {};
     for (final list in state.history) {
       for (final item in list.items) {
-        // Get the category name in Portuguese, or use 'Outros' as default
         final categoryId = item.category;
         final category = categoryId != null
             ? Category.findById(categoryId)
@@ -102,7 +97,6 @@ class HistoryViewModel extends StateNotifier<HistoryState> {
   }
 }
 
-/// History Provider
 final historyViewModelProvider =
     StateNotifierProvider<HistoryViewModel, HistoryState>((ref) {
       return HistoryViewModel(ref);

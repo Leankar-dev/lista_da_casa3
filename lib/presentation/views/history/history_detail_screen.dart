@@ -9,7 +9,6 @@ import '../../../domain/entities/category.dart';
 import '../../widgets/common/neumorphic_app_bar.dart';
 import '../../widgets/common/neumorphic_card.dart';
 
-/// History Detail Screen
 class HistoryDetailScreen extends StatelessWidget {
   final ShoppingList shoppingList;
 
@@ -28,10 +27,8 @@ class HistoryDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Summary Card
             _SummaryCard(shoppingList: shoppingList),
             const SizedBox(height: AppConstants.largePadding),
-            // Items Header
             const Text(
               AppStrings.itemsPurchased,
               style: TextStyle(
@@ -41,7 +38,6 @@ class HistoryDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppConstants.defaultPadding),
-            // Items List
             ...shoppingList.items.map((item) {
               final category = item.category != null
                   ? Category.findById(item.category!)
@@ -61,7 +57,6 @@ class HistoryDetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(AppConstants.defaultPadding),
                   child: Row(
                     children: [
-                      // Category Icon
                       if (category != null)
                         Container(
                           padding: const EdgeInsets.all(8),
@@ -89,7 +84,6 @@ class HistoryDetailScreen extends StatelessWidget {
                           ),
                         ),
                       const SizedBox(width: AppConstants.defaultPadding),
-                      // Item Details
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +107,6 @@ class HistoryDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Total
                       Text(
                         Formatters.currency(item.totalPrice),
                         style: const TextStyle(
@@ -144,7 +137,6 @@ class _SummaryCard extends StatelessWidget {
     return NeumorphicCard(
       child: Column(
         children: [
-          // Market Info
           if (shoppingList.marketName != null) ...[
             Row(
               children: [
@@ -168,7 +160,6 @@ class _SummaryCard extends StatelessWidget {
             const Divider(),
             const SizedBox(height: AppConstants.defaultPadding),
           ],
-          // Stats Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

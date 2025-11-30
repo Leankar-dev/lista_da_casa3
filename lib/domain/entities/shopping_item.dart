@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// Shopping Item Entity
 class ShoppingItem extends Equatable {
   final String id;
   final String name;

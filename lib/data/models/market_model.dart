@@ -1,7 +1,6 @@
 import '../../domain/entities/market.dart';
 import '../database/app_database.dart';
 
-/// Market Model - Data Transfer Object
 class MarketModel extends Market {
   const MarketModel({
     required super.id,
@@ -11,7 +10,6 @@ class MarketModel extends Market {
     required super.updatedAt,
   });
 
-  /// From Entity
   factory MarketModel.fromEntity(Market entity) {
     return MarketModel(
       id: entity.id,
@@ -22,7 +20,6 @@ class MarketModel extends Market {
     );
   }
 
-  /// From Database Row
   factory MarketModel.fromDatabase(MarketsTableData data) {
     return MarketModel(
       id: data.id,
@@ -33,7 +30,6 @@ class MarketModel extends Market {
     );
   }
 
-  /// From JSON (Firebase)
   factory MarketModel.fromJson(Map<String, dynamic> json) {
     return MarketModel(
       id: json['id'] as String,
@@ -44,7 +40,6 @@ class MarketModel extends Market {
     );
   }
 
-  /// To JSON (Firebase)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -55,7 +50,6 @@ class MarketModel extends Market {
     };
   }
 
-  /// To Entity
   Market toEntity() {
     return Market(
       id: id,

@@ -8,7 +8,6 @@ import 'tables/tables.dart';
 
 part 'app_database.g.dart';
 
-/// Main application database using Drift
 @DriftDatabase(tables: [ShoppingItemsTable, ShoppingListsTable, MarketsTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
@@ -16,7 +15,6 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => AppConstants.databaseVersion;
 
-  // Shopping Items Operations
   Future<List<ShoppingItemsTableData>> getAllShoppingItems() =>
       select(shoppingItemsTable).get();
 
@@ -54,7 +52,6 @@ class AppDatabase extends _$AppDatabase {
     shoppingItemsTable,
   )..where((tbl) => tbl.shoppingListId.equals(listId))).go();
 
-  // Shopping Lists Operations
   Future<List<ShoppingListsTableData>> getAllShoppingLists() =>
       select(shoppingListsTable).get();
 
@@ -110,7 +107,6 @@ class AppDatabase extends _$AppDatabase {
   Future<int> deleteShoppingList(String id) =>
       (delete(shoppingListsTable)..where((tbl) => tbl.id.equals(id))).go();
 
-  // Markets Operations
   Future<List<MarketsTableData>> getAllMarkets() => select(marketsTable).get();
 
   Stream<List<MarketsTableData>> watchAllMarkets() =>

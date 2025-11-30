@@ -1,7 +1,6 @@
 import '../../domain/entities/shopping_item.dart';
 import '../database/app_database.dart';
 
-/// Shopping Item Model - Data Transfer Object
 class ShoppingItemModel extends ShoppingItem {
   const ShoppingItemModel({
     required super.id,
@@ -16,7 +15,6 @@ class ShoppingItemModel extends ShoppingItem {
     required super.updatedAt,
   });
 
-  /// From Entity
   factory ShoppingItemModel.fromEntity(ShoppingItem entity) {
     return ShoppingItemModel(
       id: entity.id,
@@ -32,7 +30,6 @@ class ShoppingItemModel extends ShoppingItem {
     );
   }
 
-  /// From Database Row
   factory ShoppingItemModel.fromDatabase(ShoppingItemsTableData data) {
     return ShoppingItemModel(
       id: data.id,
@@ -48,7 +45,6 @@ class ShoppingItemModel extends ShoppingItem {
     );
   }
 
-  /// From JSON (Firebase)
   factory ShoppingItemModel.fromJson(Map<String, dynamic> json) {
     return ShoppingItemModel(
       id: json['id'] as String,
@@ -64,7 +60,6 @@ class ShoppingItemModel extends ShoppingItem {
     );
   }
 
-  /// To JSON (Firebase)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -80,7 +75,6 @@ class ShoppingItemModel extends ShoppingItem {
     };
   }
 
-  /// To Entity
   ShoppingItem toEntity() {
     return ShoppingItem(
       id: id,

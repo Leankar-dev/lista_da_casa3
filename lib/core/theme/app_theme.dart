@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 
-/// App Theme Configuration
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(

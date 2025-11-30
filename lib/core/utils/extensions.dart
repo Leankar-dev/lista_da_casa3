@@ -1,6 +1,5 @@
 import 'package:intl/intl.dart';
 
-/// Dart Extensions for common operations
 extension StringExtensions on String {
   String get capitalize {
     if (isEmpty) return this;

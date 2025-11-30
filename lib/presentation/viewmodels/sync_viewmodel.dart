@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/di/injection.dart';
 
-/// Sync State
 class SyncState {
   final bool isSyncing;
   final String? error;
@@ -18,7 +17,6 @@ class SyncState {
   }
 }
 
-/// Sync ViewModel
 class SyncViewModel extends StateNotifier<SyncState> {
   final Ref _ref;
 
@@ -73,7 +71,6 @@ class SyncViewModel extends StateNotifier<SyncState> {
   }
 }
 
-/// Sync Provider
 final syncViewModelProvider = StateNotifierProvider<SyncViewModel, SyncState>((
   ref,
 ) {

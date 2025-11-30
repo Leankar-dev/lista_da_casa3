@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-/// Firebase Authentication Service
 class FirebaseAuthService {
   FirebaseAuth? _auth;
   bool _isInitialized = false;
 
-  /// Initialize Firebase Auth (call after Firebase.initializeApp)
   void _ensureInitialized() {
     if (!_isInitialized) {
       try {
@@ -20,22 +18,18 @@ class FirebaseAuthService {
     }
   }
 
-  /// Check if Firebase is available
   bool get isFirebaseAvailable {
     _ensureInitialized();
     return _isInitialized && _auth != null;
   }
 
-  /// Get current user
   User? get currentUser {
     _ensureInitialized();
     return _auth?.currentUser;
   }
 
-  /// Check if user is authenticated
   bool get isAuthenticated => currentUser != null;
 
-  /// Stream of auth state changes
   Stream<User?> get authStateChanges {
     _ensureInitialized();
     if (_auth == null) {
@@ -44,7 +38,6 @@ class FirebaseAuthService {
     return _auth!.authStateChanges();
   }
 
-  /// Sign in with email and password
   Future<UserCredential?> signInWithEmail({
     required String email,
     required String password,
@@ -61,7 +54,6 @@ class FirebaseAuthService {
     }
   }
 
-  /// Register with email and password
   Future<UserCredential?> registerWithEmail({
     required String email,
     required String password,
@@ -78,13 +70,11 @@ class FirebaseAuthService {
     }
   }
 
-  /// Sign out
   Future<void> signOut() async {
     _ensureInitialized();
     await _auth?.signOut();
   }
 
-  /// Send password reset email
   Future<void> sendPasswordResetEmail(String email) async {
     _ensureInitialized();
     if (_auth == null) return;
@@ -95,7 +85,6 @@ class FirebaseAuthService {
     }
   }
 
-  /// Handle Firebase Auth exceptions
   String _handleAuthException(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':

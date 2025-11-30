@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// Market Entity
 class Market extends Equatable {
   final String id;
   final String name;

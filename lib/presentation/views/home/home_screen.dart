@@ -8,7 +8,6 @@ import '../history/history_screen.dart';
 import '../markets/markets_screen.dart';
 import '../charts/charts_screen.dart';
 
-/// Home Screen with Bottom Navigation
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 

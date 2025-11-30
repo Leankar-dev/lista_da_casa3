@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 
-/// Custom Neumorphic Bottom Navigation Bar
 class NeumorphicBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -44,7 +43,6 @@ class NeumorphicBottomNav extends StatelessWidget {
   }
 }
 
-/// Bottom Nav Item Data
 class NeumorphicBottomNavItem {
   final IconData icon;
   final IconData? selectedIcon;

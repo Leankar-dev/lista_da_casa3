@@ -5,7 +5,6 @@ import '../../domain/repositories/i_shopping_item_repository.dart';
 import '../database/app_database.dart';
 import '../models/shopping_item_model.dart';
 
-/// Shopping Item Repository Implementation using Drift
 class ShoppingItemRepositoryImpl implements IShoppingItemRepository {
   final AppDatabase _database;
 

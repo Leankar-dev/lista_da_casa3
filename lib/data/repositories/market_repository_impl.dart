@@ -4,7 +4,6 @@ import '../../domain/repositories/i_market_repository.dart';
 import '../database/app_database.dart';
 import '../models/market_model.dart';
 
-/// Market Repository Implementation using Drift
 class MarketRepositoryImpl implements IMarketRepository {
   final AppDatabase _database;
 

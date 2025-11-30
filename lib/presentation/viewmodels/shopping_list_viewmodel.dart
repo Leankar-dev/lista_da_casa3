@@ -4,7 +4,6 @@ import '../../core/di/injection.dart';
 import '../../domain/entities/shopping_item.dart';
 import '../../domain/entities/shopping_list.dart';
 
-/// Shopping List State
 class ShoppingListState {
   final ShoppingList? activeList;
   final List<ShoppingItem> items;
@@ -44,7 +43,6 @@ class ShoppingListState {
   }
 }
 
-/// Shopping List ViewModel
 class ShoppingListViewModel extends StateNotifier<ShoppingListState> {
   final Ref _ref;
   static const _uuid = Uuid();
@@ -64,7 +62,6 @@ class ShoppingListViewModel extends StateNotifier<ShoppingListState> {
       var activeList = await repository.getActiveList();
 
       if (activeList == null) {
-        // Create a new active list if none exists
         final newList = ShoppingList(
           id: _uuid.v4(),
           name: 'Lista de Compras',
@@ -158,7 +155,6 @@ class ShoppingListViewModel extends StateNotifier<ShoppingListState> {
       final repository = _ref.read(shoppingListRepositoryProvider);
       await repository.finalizeList(state.activeList!.id, marketId);
 
-      // Create a new active list
       final newList = ShoppingList(
         id: _uuid.v4(),
         name: 'Lista de Compras',
@@ -179,7 +175,6 @@ class ShoppingListViewModel extends StateNotifier<ShoppingListState> {
   }
 }
 
-/// Shopping List Provider
 final shoppingListViewModelProvider =
     StateNotifierProvider<ShoppingListViewModel, ShoppingListState>((ref) {
       return ShoppingListViewModel(ref);

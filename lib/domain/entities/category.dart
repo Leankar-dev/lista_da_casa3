@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_strings.dart';
 
-/// Category Entity
 class Category extends Equatable {
   final String id;
   final String name;
@@ -20,7 +19,6 @@ class Category extends Equatable {
   @override
   List<Object?> get props => [id, name, icon, color];
 
-  /// Default categories
   static List<Category> get defaultCategories => [
     const Category(
       id: 'fruits',

@@ -15,7 +15,6 @@ import '../../widgets/common/loading_indicator.dart';
 import 'history_detail_screen.dart';
 import 'edit_history_screen.dart';
 
-/// History Screen
 class HistoryScreen extends ConsumerWidget {
   const HistoryScreen({super.key});
 
@@ -56,7 +55,6 @@ class HistoryScreen extends ConsumerWidget {
             //       Navigator.of(context).popUntil((route) => route.isFirst),
             // ),
             actions: [
-              // Sync button
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: syncState.isSyncing
@@ -232,10 +230,8 @@ class _HistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Action buttons and Total
                 Row(
                   children: [
-                    // Edit button
                     GestureDetector(
                       onTap: onEdit,
                       child: Container(
@@ -252,7 +248,6 @@ class _HistoryCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    // Delete button
                     GestureDetector(
                       onTap: onDelete,
                       child: Container(
@@ -269,7 +264,6 @@ class _HistoryCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    // Total
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -317,7 +311,6 @@ class _HistoryCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Items count
                 Text(
                   '${list.totalItems} ${list.totalItems == 1 ? 'item' : 'itens'}',
                   style: const TextStyle(
@@ -325,7 +318,6 @@ class _HistoryCard extends StatelessWidget {
                     color: AppColors.textSecondary,
                   ),
                 ),
-                // View details
                 Row(
                   children: [
                     Text(

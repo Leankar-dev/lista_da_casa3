@@ -3,7 +3,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/neumorphic_theme.dart';
 
-/// Custom Neumorphic Button
 class NeumorphicButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -85,7 +84,6 @@ class NeumorphicButtonWidget extends StatelessWidget {
   }
 }
 
-/// Primary Neumorphic Button (filled)
 class NeumorphicPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -156,7 +154,6 @@ class NeumorphicPrimaryButton extends StatelessWidget {
   }
 }
 
-/// Neumorphic Icon Button
 class NeumorphicIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;

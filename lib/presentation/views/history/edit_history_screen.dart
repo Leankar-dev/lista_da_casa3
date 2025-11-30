@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
@@ -17,7 +16,6 @@ import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/neumorphic_button.dart';
 import '../../../core/di/injection.dart';
 
-/// Edit History Screen - Edit a finalized shopping list
 class EditHistoryScreen extends ConsumerStatefulWidget {
   final ShoppingList shoppingList;
 
@@ -63,7 +61,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Date info (read-only)
             NeumorphicCard(
               child: Row(
                 children: [
@@ -99,7 +96,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
             ),
             const SizedBox(height: AppConstants.defaultPadding),
 
-            // Market Selection
             const Text(
               'Mercado',
               style: TextStyle(
@@ -166,7 +162,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
             ),
             const SizedBox(height: AppConstants.largePadding),
 
-            // Items Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -189,7 +184,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
             ),
             const SizedBox(height: 12),
 
-            // Items List
             ..._items.asMap().entries.map((entry) {
               final index = entry.key;
               final item = entry.value;
@@ -202,7 +196,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
 
             const SizedBox(height: AppConstants.largePadding),
 
-            // Total
             NeumorphicCard(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +221,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
             ),
             const SizedBox(height: AppConstants.defaultPadding),
 
-            // Save Button
             if (_hasChanges)
               NeumorphicPrimaryButton(
                 text: 'Guardar Alterações',
@@ -296,7 +288,6 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
     try {
       final repository = ref.read(shoppingListRepositoryProvider);
 
-      // Update the list with new market info
       final updatedList = widget.shoppingList.copyWith(
         marketId: _selectedMarketId,
         marketName: _selectedMarketName,
@@ -305,10 +296,8 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
 
       await repository.updateList(updatedList);
 
-      // Update items
       final itemRepository = ref.read(shoppingItemRepositoryProvider);
 
-      // Delete removed items
       final originalIds = widget.shoppingList.items.map((i) => i.id).toSet();
       final currentIds = _items.map((i) => i.id).toSet();
       final deletedIds = originalIds.difference(currentIds);
@@ -317,12 +306,10 @@ class _EditHistoryScreenState extends ConsumerState<EditHistoryScreen> {
         await itemRepository.deleteItem(id);
       }
 
-      // Update existing items
       for (final item in _items) {
         await itemRepository.updateItem(item);
       }
 
-      // Reload history
       await ref.read(historyViewModelProvider.notifier).loadHistory();
 
       if (mounted) {
@@ -367,7 +354,6 @@ class _EditableItemCard extends StatelessWidget {
         padding: const EdgeInsets.all(AppConstants.defaultPadding),
         child: Row(
           children: [
-            // Category Icon
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -382,7 +368,6 @@ class _EditableItemCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            // Item Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,7 +391,6 @@ class _EditableItemCard extends StatelessWidget {
                 ],
               ),
             ),
-            // Total
             Text(
               Formatters.currency(item.totalPrice),
               style: const TextStyle(
@@ -416,7 +400,6 @@ class _EditableItemCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            // Action buttons
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -460,7 +443,6 @@ class _EditableItemCard extends StatelessWidget {
   }
 }
 
-/// Dialog for editing an item's quantity and price
 class _EditItemDialog extends StatefulWidget {
   final ShoppingItem item;
   final Function(ShoppingItem) onSave;

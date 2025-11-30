@@ -5,7 +5,6 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/app_strings.dart';
 import '../home/home_screen.dart';
 
-/// Animated Splash Screen
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -82,7 +81,6 @@ class _SplashScreenState extends State<SplashScreen>
                   curve: Curves.easeInOut,
                 ),
             const SizedBox(height: 40),
-            // App Name with fade in
             Text(
                   AppStrings.appName,
                   style: const TextStyle(
@@ -103,7 +101,6 @@ class _SplashScreenState extends State<SplashScreen>
                   duration: AppConstants.fadeInDuration,
                 ),
             const SizedBox(height: 8),
-            // Developer credit with fade in
             Text(
               AppStrings.byDeveloper,
               style: TextStyle(

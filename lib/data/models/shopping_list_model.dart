@@ -3,7 +3,6 @@ import '../../domain/entities/shopping_item.dart';
 import '../database/app_database.dart';
 import 'shopping_item_model.dart';
 
-/// Shopping List Model - Data Transfer Object
 class ShoppingListModel extends ShoppingList {
   const ShoppingListModel({
     required super.id,
@@ -17,7 +16,6 @@ class ShoppingListModel extends ShoppingList {
     super.finalizedAt,
   });
 
-  /// From Entity
   factory ShoppingListModel.fromEntity(ShoppingList entity) {
     return ShoppingListModel(
       id: entity.id,
@@ -32,7 +30,6 @@ class ShoppingListModel extends ShoppingList {
     );
   }
 
-  /// From Database Row
   factory ShoppingListModel.fromDatabase(
     ShoppingListsTableData data, {
     List<ShoppingItem> items = const [],
@@ -52,7 +49,6 @@ class ShoppingListModel extends ShoppingList {
     );
   }
 
-  /// From JSON (Firebase)
   factory ShoppingListModel.fromJson(Map<String, dynamic> json) {
     final itemsList =
         (json['items'] as List<dynamic>?)
@@ -80,7 +76,6 @@ class ShoppingListModel extends ShoppingList {
     );
   }
 
-  /// To JSON (Firebase)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -97,7 +92,6 @@ class ShoppingListModel extends ShoppingList {
     };
   }
 
-  /// To Entity
   ShoppingList toEntity() {
     return ShoppingList(
       id: id,

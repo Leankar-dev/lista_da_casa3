@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 
-/// Custom Neumorphic Text Field
 class NeumorphicTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
@@ -118,7 +117,6 @@ class NeumorphicTextField extends StatelessWidget {
   }
 }
 
-/// Neumorphic Search Field
 class NeumorphicSearchField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;

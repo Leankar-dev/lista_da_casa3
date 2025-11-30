@@ -3,7 +3,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_constants.dart';
 
-/// Custom Snackbar Helper
 class SnackbarHelper {
   SnackbarHelper._();
 
@@ -81,7 +80,6 @@ class SnackbarHelper {
     );
   }
 
-  /// Show snackbar with action button
   static void showWithAction(
     BuildContext context, {
     required String message,

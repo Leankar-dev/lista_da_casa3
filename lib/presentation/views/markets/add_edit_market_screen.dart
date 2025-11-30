@@ -11,7 +11,6 @@ import '../../widgets/common/neumorphic_app_bar.dart';
 import '../../widgets/common/neumorphic_text_field.dart';
 import '../../widgets/common/neumorphic_button.dart';
 
-/// Add/Edit Market Screen
 class AddEditMarketScreen extends ConsumerStatefulWidget {
   final Market? market;
 
@@ -59,7 +58,6 @@ class _AddEditMarketScreenState extends ConsumerState<AddEditMarketScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Store Icon
               Center(
                 child: Neumorphic(
                   style: NeumorphicStyle(
@@ -77,7 +75,6 @@ class _AddEditMarketScreenState extends ConsumerState<AddEditMarketScreen> {
                 ),
               ),
               const SizedBox(height: AppConstants.largePadding),
-              // Market Name
               NeumorphicTextField(
                 controller: _nameController,
                 labelText: '${AppStrings.marketName} *',
@@ -87,7 +84,6 @@ class _AddEditMarketScreenState extends ConsumerState<AddEditMarketScreen> {
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: AppConstants.defaultPadding),
-              // Market Address
               NeumorphicTextField(
                 controller: _addressController,
                 labelText: AppStrings.marketAddress,
@@ -97,7 +93,6 @@ class _AddEditMarketScreenState extends ConsumerState<AddEditMarketScreen> {
                 textInputAction: TextInputAction.done,
               ),
               const SizedBox(height: AppConstants.largePadding * 2),
-              // Save Button
               NeumorphicPrimaryButton(
                 text: AppStrings.save,
                 icon: Icons.check,

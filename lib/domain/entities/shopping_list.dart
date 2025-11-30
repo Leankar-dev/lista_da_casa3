@@ -1,10 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'shopping_item.dart';
 
-/// Shopping List Status
 enum ShoppingListStatus { active, finalized }
 
-/// Shopping List Entity
 class ShoppingList extends Equatable {
   final String id;
   final String? name;

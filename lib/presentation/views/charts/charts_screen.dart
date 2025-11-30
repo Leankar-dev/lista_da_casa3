@@ -12,7 +12,6 @@ import '../../widgets/common/neumorphic_app_bar.dart';
 import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/loading_indicator.dart';
 
-/// Charts Screen
 class ChartsScreen extends ConsumerWidget {
   const ChartsScreen({super.key});
 
@@ -32,7 +31,6 @@ class ChartsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Line Chart - Spending Evolution
                   const Text(
                     AppStrings.spendingEvolution,
                     style: TextStyle(
@@ -48,7 +46,6 @@ class ChartsScreen extends ConsumerWidget {
                         .getSpendingByMonth(),
                   ),
                   const SizedBox(height: AppConstants.largePadding),
-                  // Pie Chart - Category Distribution
                   const Text(
                     AppStrings.categoryDistribution,
                     style: TextStyle(
@@ -64,7 +61,6 @@ class ChartsScreen extends ConsumerWidget {
                         .getSpendingByCategory(),
                   ),
                   const SizedBox(height: AppConstants.largePadding),
-                  // Total Summary
                   _TotalSummaryCard(totalSpent: state.totalSpent),
                 ],
               ),
@@ -238,7 +234,6 @@ class _PieChartWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppConstants.defaultPadding),
-          // Legend
           Wrap(
             spacing: 12,
             runSpacing: 8,

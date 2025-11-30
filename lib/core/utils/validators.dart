@@ -1,6 +1,5 @@
 import '../constants/app_strings.dart';
 
-/// Form Validators
 class Validators {
   Validators._();
 

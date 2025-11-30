@@ -8,7 +8,6 @@ import '../../presentation/views/markets/markets_screen.dart';
 import '../../presentation/views/markets/add_edit_market_screen.dart';
 import '../../presentation/views/charts/charts_screen.dart';
 
-/// App Routes
 class AppRoutes {
   static const String splash = '/';
   static const String home = '/home';

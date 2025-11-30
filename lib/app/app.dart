@@ -4,7 +4,6 @@ import '../core/theme/app_theme.dart';
 import '../core/theme/neumorphic_theme.dart';
 import '../presentation/views/splash/splash_screen.dart';
 
-/// ListaDaCasa App Widget
 class ListaDaCasaApp extends StatelessWidget {
   const ListaDaCasaApp({super.key});
 

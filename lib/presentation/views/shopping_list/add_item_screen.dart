@@ -14,7 +14,6 @@ import '../../widgets/common/neumorphic_text_field.dart';
 import '../../widgets/common/neumorphic_button.dart';
 import '../../widgets/common/neumorphic_card.dart';
 
-/// Add/Edit Item Screen
 class AddItemScreen extends ConsumerStatefulWidget {
   final ShoppingItem? item;
 
@@ -73,7 +72,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Item Name
               NeumorphicTextField(
                 controller: _nameController,
                 labelText: '${AppStrings.itemName} *',
@@ -84,7 +82,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
               ),
               const SizedBox(height: AppConstants.defaultPadding),
 
-              // Quantity and Price Row
               Row(
                 children: [
                   Expanded(
@@ -116,7 +113,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
               ),
               const SizedBox(height: AppConstants.defaultPadding),
 
-              // Category Selection
               const Text(
                 AppStrings.category,
                 style: TextStyle(
@@ -136,7 +132,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
               ),
               const SizedBox(height: AppConstants.defaultPadding),
 
-              // Observations
               NeumorphicTextField(
                 controller: _observationsController,
                 labelText: AppStrings.observations,
@@ -147,7 +142,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
               ),
               const SizedBox(height: AppConstants.largePadding),
 
-              // Calculated Total
               NeumorphicFlatCard(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +167,6 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
               ),
               const SizedBox(height: AppConstants.largePadding),
 
-              // Save Button
               NeumorphicPrimaryButton(
                 text: AppStrings.save,
                 icon: Icons.check,

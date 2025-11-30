@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/di/injection.dart';
 
-/// Auth State
 class AuthState {
   final User? user;
   final bool isLoading;
@@ -33,7 +32,6 @@ class AuthState {
   }
 }
 
-/// Auth ViewModel
 class AuthViewModel extends StateNotifier<AuthState> {
   final Ref _ref;
 
@@ -111,7 +109,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
   }
 }
 
-/// Auth Provider
 final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((
   ref,
 ) {

@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 
-/// Custom Neumorphic App Bar
 class CustomNeumorphicAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String title;
@@ -85,7 +84,6 @@ class CustomNeumorphicAppBar extends StatelessWidget
   Size get preferredSize => Size.fromHeight(height);
 }
 
-/// Neumorphic App Bar Action Button
 class NeumorphicAppBarAction extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;

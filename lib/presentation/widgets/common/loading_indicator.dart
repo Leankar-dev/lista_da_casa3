@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 
-/// Custom Loading Indicator
 class LoadingIndicator extends StatelessWidget {
   final double size;
   final Color? color;
@@ -50,7 +49,6 @@ class LoadingIndicator extends StatelessWidget {
   }
 }
 
-/// Full Screen Loading Overlay
 class LoadingOverlay extends StatelessWidget {
   final bool isLoading;
   final Widget child;
@@ -78,7 +76,6 @@ class LoadingOverlay extends StatelessWidget {
   }
 }
 
-/// Neumorphic Progress Indicator
 class NeumorphicProgressIndicator extends StatelessWidget {
   final double progress;
   final double height;
@@ -120,14 +117,12 @@ class NeumorphicProgressIndicator extends StatelessWidget {
 
             return Stack(
               children: [
-                // Background track (inner shadow effect)
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.background.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(height / 2),
                   ),
                 ),
-                // Progress bar
                 AnimatedContainer(
                   duration: AppConstants.animationDuration,
                   width: progressWidth > 0 ? progressWidth : 0,

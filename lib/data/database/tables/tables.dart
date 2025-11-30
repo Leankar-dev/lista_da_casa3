@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 
-/// Shopping Items Table
 class ShoppingItemsTable extends Table {
   @override
   String get tableName => 'shopping_items';
@@ -20,7 +19,6 @@ class ShoppingItemsTable extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Shopping Lists Table
 class ShoppingListsTable extends Table {
   @override
   String get tableName => 'shopping_lists';
@@ -38,7 +36,6 @@ class ShoppingListsTable extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Markets Table
 class MarketsTable extends Table {
   @override
   String get tableName => 'markets';

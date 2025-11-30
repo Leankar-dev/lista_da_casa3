@@ -2,7 +2,6 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/neumorphic_theme.dart';
 
-/// Custom Neumorphic Card
 class NeumorphicCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -53,7 +52,6 @@ class NeumorphicCard extends StatelessWidget {
   }
 }
 
-/// Neumorphic Flat Card (for inner containers)
 class NeumorphicFlatCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -99,7 +97,6 @@ class NeumorphicFlatCard extends StatelessWidget {
   }
 }
 
-/// Neumorphic Container
 class NeumorphicContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
