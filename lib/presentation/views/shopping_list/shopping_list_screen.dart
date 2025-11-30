@@ -30,7 +30,7 @@ class ShoppingListScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: CustomNeumorphicAppBar(
-        title: AppStrings.shoppingList,
+        title: AppStrings.appName,
         actions: [
           if (authState.isAuthenticated)
             NeumorphicAppBarAction(
@@ -67,10 +67,11 @@ class ShoppingListScreen extends ConsumerWidget {
           ? const LoadingIndicator()
           : Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(AppConstants.defaultPadding),
-                  child: _ShoppingSummaryCard(state: state),
-                ),
+                if (state.items.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(AppConstants.defaultPadding),
+                    child: _ShoppingSummaryCard(state: state),
+                  ),
 
                 Expanded(
                   child: state.items.isEmpty
@@ -100,7 +101,12 @@ class ShoppingListScreen extends ConsumerWidget {
 
                 if (state.items.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.all(AppConstants.defaultPadding),
+                    padding: const EdgeInsets.only(
+                      left: AppConstants.defaultPadding,
+                      right: AppConstants.defaultPadding,
+                      top: AppConstants.defaultPadding,
+                      bottom: AppConstants.largePadding + 60,
+                    ),
                     child: NeumorphicPrimaryButton(
                       text: AppStrings.finalizePurchase,
                       icon: Icons.check_circle_outline,

@@ -150,6 +150,23 @@ class ShoppingItemTile extends StatelessWidget {
                             color: category.color.withValues(alpha: 0.8),
                           ),
                         ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _ActionButton(
+                            icon: Icons.edit_outlined,
+                            color: AppColors.primary,
+                            onPressed: onEdit,
+                          ),
+                          const SizedBox(width: 8),
+                          _ActionButton(
+                            icon: Icons.delete_outline,
+                            color: AppColors.error,
+                            onPressed: onDelete,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -190,6 +207,34 @@ class _NeumorphicCheckbox extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: value ? Icon(Icons.check, color: color, size: 20) : null,
         ),
+      ),
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onPressed;
+
+  const _ActionButton({
+    required this.icon,
+    required this.color,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Neumorphic(
+        style: NeumorphicStyle(
+          depth: 3,
+          intensity: AppConstants.neumorphicIntensity,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(6)),
+        ),
+        padding: const EdgeInsets.all(6),
+        child: Icon(icon, color: color, size: 18),
       ),
     );
   }
