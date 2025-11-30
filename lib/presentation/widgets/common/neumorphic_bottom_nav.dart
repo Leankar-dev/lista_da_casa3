@@ -94,7 +94,7 @@ class _NavItem extends StatelessWidget {
               child: Icon(
                 isSelected ? selectedIcon : icon,
                 size: 24,
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                color: isSelected ? AppColors.primary : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 4),
@@ -102,8 +102,8 @@ class _NavItem extends StatelessWidget {
               label,
               style: TextStyle(
                 fontSize: 10,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected ? AppColors.primary : AppColors.textPrimary,
               ),
             ),
           ],

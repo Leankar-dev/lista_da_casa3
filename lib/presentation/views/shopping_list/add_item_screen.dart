@@ -65,116 +65,123 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
       appBar: CustomNeumorphicAppBar(
         title: isEditing ? AppStrings.editItem : AppStrings.addItem,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppConstants.defaultPadding),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              NeumorphicTextField(
-                controller: _nameController,
-                labelText: '${AppStrings.itemName} *',
-                hintText: 'Ex: Leite, Pão, Arroz...',
-                prefixIcon: Icons.shopping_bag_outlined,
-                validator: Validators.itemName,
-                textInputAction: TextInputAction.next,
-              ),
-              const SizedBox(height: AppConstants.defaultPadding),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: NeumorphicTextField(
-                      controller: _quantityController,
-                      labelText: '${AppStrings.quantity} *',
-                      hintText: '1',
-                      prefixIcon: Icons.numbers,
-                      keyboardType: TextInputType.number,
-                      validator: Validators.quantity,
-                      textInputAction: TextInputAction.next,
-                    ),
-                  ),
-                  const SizedBox(width: AppConstants.defaultPadding),
-                  Expanded(
-                    child: NeumorphicTextField(
-                      controller: _priceController,
-                      labelText: '${AppStrings.price} *',
-                      hintText: '0.00',
-                      prefixIcon: Icons.euro,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      validator: Validators.price,
-                      textInputAction: TextInputAction.next,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppConstants.defaultPadding),
-
-              const Text(
-                AppStrings.category,
-                style: TextStyle(
-                  color: AppColors.textSecondary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 8),
-              _CategorySelector(
-                selectedCategory: _selectedCategory,
-                onCategorySelected: (category) {
-                  setState(() {
-                    _selectedCategory = category;
-                  });
-                },
-              ),
-              const SizedBox(height: AppConstants.defaultPadding),
-
-              NeumorphicTextField(
-                controller: _observationsController,
-                labelText: AppStrings.observations,
-                hintText: 'Notas adicionais...',
-                prefixIcon: Icons.notes_outlined,
-                maxLines: 3,
-                textInputAction: TextInputAction.done,
-              ),
-              const SizedBox(height: AppConstants.largePadding),
-
-              NeumorphicFlatCard(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(AppConstants.defaultPadding),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    NeumorphicTextField(
+                      controller: _nameController,
+                      labelText: '${AppStrings.itemName} *',
+                      hintText: 'Ex: Leite, Pão, Arroz...',
+                      prefixIcon: Icons.shopping_bag_outlined,
+                      validator: Validators.itemName,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(height: AppConstants.defaultPadding),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: NeumorphicTextField(
+                            controller: _quantityController,
+                            labelText: '${AppStrings.quantity} *',
+                            hintText: '1',
+                            prefixIcon: Icons.numbers,
+                            keyboardType: TextInputType.number,
+                            validator: Validators.quantity,
+                            textInputAction: TextInputAction.next,
+                          ),
+                        ),
+                        const SizedBox(width: AppConstants.defaultPadding),
+                        Expanded(
+                          child: NeumorphicTextField(
+                            controller: _priceController,
+                            labelText: '${AppStrings.price} *',
+                            hintText: '0.00',
+                            prefixIcon: Icons.euro,
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
+                            validator: Validators.price,
+                            textInputAction: TextInputAction.next,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppConstants.defaultPadding),
+
                     const Text(
-                      'Total:',
+                      AppStrings.category,
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
                         color: AppColors.textSecondary,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
-                      _calculateTotal(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                    const SizedBox(height: 8),
+                    _CategorySelector(
+                      selectedCategory: _selectedCategory,
+                      onCategorySelected: (category) {
+                        setState(() {
+                          _selectedCategory = category;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: AppConstants.defaultPadding),
+
+                    NeumorphicTextField(
+                      controller: _observationsController,
+                      labelText: AppStrings.observations,
+                      hintText: 'Notas adicionais...',
+                      prefixIcon: Icons.notes_outlined,
+                      maxLines: 2,
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const SizedBox(height: AppConstants.defaultPadding),
+
+                    NeumorphicFlatCard(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Total:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                          Text(
+                            _calculateTotal(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: AppConstants.largePadding),
-
-              NeumorphicPrimaryButton(
-                text: AppStrings.save,
-                icon: Icons.check,
-                onPressed: _saveItem,
-              ),
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(AppConstants.defaultPadding),
+            child: NeumorphicPrimaryButton(
+              text: AppStrings.save,
+              icon: Icons.check,
+              onPressed: _saveItem,
+            ),
+          ),
+        ],
       ),
     );
   }
