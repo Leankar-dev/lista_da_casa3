@@ -87,6 +87,18 @@ class Category extends Equatable {
       color: AppColors.categorySnacks,
     ),
     const Category(
+      id: 'grocery',
+      name: AppStrings.grocery,
+      icon: '🛒',
+      color: AppColors.categoryGrocery,
+    ),
+    const Category(
+      id: 'petFood',
+      name: AppStrings.petFood,
+      icon: '🐾',
+      color: AppColors.categoryPetFood,
+    ),
+    const Category(
       id: 'other',
       name: AppStrings.other,
       icon: '📦',

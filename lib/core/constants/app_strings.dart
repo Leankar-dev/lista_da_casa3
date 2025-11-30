@@ -56,6 +56,8 @@ abstract class AppStrings {
   static const String hygiene = 'Higiene';
   static const String frozen = 'Congelados';
   static const String snacks = 'Snacks';
+  static const String grocery = 'Mercearia';
+  static const String petFood = 'PetFood';
   static const String other = 'Outros';
 
   static const String spendingEvolution = 'Evolução dos Gastos';

@@ -41,6 +41,8 @@ abstract class AppColors {
   static const Color categoryHygiene = Color(0xFFFF85A2);
   static const Color categoryFrozen = Color(0xFF81ECEC);
   static const Color categorySnacks = Color(0xFFFFC048);
+  static const Color categoryGrocery = Color(0xFFA29BFE);
+  static const Color categoryPetFood = Color(0xFFE17055);
   static const Color categoryOther = Color(0xFFB2BEC3);
 
   static const List<Color> chartColors = [
@@ -55,6 +57,8 @@ abstract class AppColors {
     categoryHygiene,
     categoryFrozen,
     categorySnacks,
+    categoryGrocery,
+    categoryPetFood,
     categoryOther,
   ];
 
