@@ -24,7 +24,7 @@ class CustomNeumorphicAppBar extends StatelessWidget
     return Container(
       height: height + MediaQuery.of(context).padding.top,
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      decoration: BoxDecoration(color: NeumorphicTheme.baseColor(context)),
+      decoration: const BoxDecoration(color: AppColors.background),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppConstants.defaultPadding,

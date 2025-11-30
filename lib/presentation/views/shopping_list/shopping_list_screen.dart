@@ -105,26 +105,62 @@ class ShoppingListScreen extends ConsumerWidget {
                       left: AppConstants.defaultPadding,
                       right: AppConstants.defaultPadding,
                       top: AppConstants.defaultPadding,
-                      bottom: AppConstants.largePadding + 60,
+                      bottom: AppConstants.largePadding,
                     ),
-                    child: NeumorphicPrimaryButton(
-                      text: AppStrings.finalizePurchase,
-                      icon: Icons.check_circle_outline,
-                      onPressed: () => _finalizePurchase(context, ref),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: NeumorphicPrimaryButton(
+                            text: AppStrings.finalizePurchase,
+                            icon: Icons.check_circle_outline,
+                            onPressed: () => _finalizePurchase(context, ref),
+                          ),
+                        ),
+                        const SizedBox(width: AppConstants.defaultPadding),
+                        NeumorphicButton(
+                          onPressed: () => _addItem(context),
+                          style: const NeumorphicStyle(
+                            depth: 8,
+                            boxShape: NeumorphicBoxShape.circle(),
+                            color: AppColors.primary,
+                          ),
+                          padding: const EdgeInsets.all(14),
+                          child: const Icon(
+                            Icons.add,
+                            color: AppColors.textLight,
+                            size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (state.items.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: AppConstants.defaultPadding,
+                      right: AppConstants.defaultPadding,
+                      bottom: AppConstants.largePadding,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: NeumorphicButton(
+                        onPressed: () => _addItem(context),
+                        style: const NeumorphicStyle(
+                          depth: 8,
+                          boxShape: NeumorphicBoxShape.circle(),
+                          color: AppColors.primary,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: const Icon(
+                          Icons.add,
+                          color: AppColors.textLight,
+                          size: 28,
+                        ),
+                      ),
                     ),
                   ),
               ],
             ),
-      floatingActionButton: NeumorphicButton(
-        onPressed: () => _addItem(context),
-        style: const NeumorphicStyle(
-          depth: 8,
-          boxShape: NeumorphicBoxShape.circle(),
-          color: AppColors.primary,
-        ),
-        padding: const EdgeInsets.all(16),
-        child: const Icon(Icons.add, color: AppColors.textLight, size: 28),
-      ),
     );
   }
 

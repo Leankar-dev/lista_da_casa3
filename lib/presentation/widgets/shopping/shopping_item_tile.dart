@@ -199,7 +199,9 @@ class _NeumorphicCheckbox extends StatelessWidget {
           depth: value ? -4 : 4,
           intensity: AppConstants.neumorphicIntensity,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(8)),
-          color: value ? color.withValues(alpha: 0.2) : null,
+          color: value
+              ? color.withValues(alpha: 0.2)
+              : AppColors.cardBackground,
         ),
         child: Container(
           width: 28,

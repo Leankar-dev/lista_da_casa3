@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/neumorphic_theme.dart';
 
@@ -37,7 +38,7 @@ class NeumorphicCard extends StatelessWidget {
 
     final card = Neumorphic(
       style: NeumorphicThemeConfig.cardStyle.copyWith(
-        color: color ?? NeumorphicTheme.baseColor(context),
+        color: color ?? AppColors.cardBackground,
       ),
       padding: effectivePadding,
       child: child,
@@ -85,7 +86,7 @@ class NeumorphicFlatCard extends StatelessWidget {
         style: NeumorphicStyle(
           depth: -4,
           intensity: AppConstants.neumorphicIntensity,
-          color: color ?? NeumorphicTheme.baseColor(context),
+          color: color ?? AppColors.background,
           boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(AppConstants.borderRadius),
           ),
