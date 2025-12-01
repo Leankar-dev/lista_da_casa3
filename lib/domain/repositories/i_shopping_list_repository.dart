@@ -17,6 +17,10 @@ abstract class IShoppingListRepository {
 
   Future<void> finalizeList(String id, String? marketId);
 
+  Future<void> clearHistory();
+
+  Future<void> saveToHistory(ShoppingList list);
+
   Stream<ShoppingList?> watchActiveList();
 
   Stream<List<ShoppingList>> watchHistory();

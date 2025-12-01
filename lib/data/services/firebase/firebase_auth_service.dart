@@ -51,6 +51,8 @@ class FirebaseAuthService {
       );
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -67,6 +69,8 @@ class FirebaseAuthService {
       );
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
+    } catch (e) {
+      rethrow;
     }
   }
 

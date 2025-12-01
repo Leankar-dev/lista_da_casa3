@@ -68,6 +68,18 @@ abstract class AppStrings {
   static const String saveToCloud = 'Guardar na Nuvem';
   static const String syncSuccess = 'Sincronização concluída';
   static const String syncError = 'Erro na sincronização';
+  static const String syncingData = 'A sincronizar dados...';
+  static const String clearCloud = 'Limpar Nuvem';
+  static const String clearCloudConfirm =
+      'Tem a certeza que deseja apagar todos os dados da nuvem? Esta ação não pode ser desfeita.';
+  static const String clearCloudSuccess = 'Dados da nuvem apagados com sucesso';
+  static const String clearCloudError = 'Erro ao limpar a nuvem';
+  static const String downloadFromCloud = 'Transferir da Nuvem';
+  static const String downloadFromCloudConfirm =
+      'Isto irá substituir os dados locais pelos dados da nuvem. Deseja continuar?';
+  static const String downloadSuccess = 'Dados transferidos com sucesso';
+  static const String downloadError = 'Erro ao transferir dados';
+  static const String syncMenu = 'Sincronização';
   static const String login = 'Entrar';
   static const String logout = 'Sair';
   static const String email = 'Email';

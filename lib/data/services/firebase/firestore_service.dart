@@ -54,10 +54,27 @@ class FirestoreService {
   Future<List<ShoppingListModel>> getHistoryFromCloud(String userId) async {
     final ref = _getHistoryRef(userId);
     if (ref == null) return [];
-    final snapshot = await ref.orderBy('finalizedAt', descending: true).get();
-    return snapshot.docs
-        .map((doc) => ShoppingListModel.fromJson(doc.data()))
-        .toList();
+
+    final snapshot = await ref.get();
+    final results = <ShoppingListModel>[];
+
+    for (final doc in snapshot.docs) {
+      try {
+        results.add(ShoppingListModel.fromJson(doc.data()));
+      } catch (_) {
+        // Ignora documentos com formato inválido
+      }
+    }
+
+    // Ordenar por finalizedAt
+    results.sort((a, b) {
+      if (a.finalizedAt == null && b.finalizedAt == null) return 0;
+      if (a.finalizedAt == null) return 1;
+      if (b.finalizedAt == null) return -1;
+      return b.finalizedAt!.compareTo(a.finalizedAt!);
+    });
+
+    return results;
   }
 
   Future<void> deleteShoppingListFromCloud(String userId, String listId) async {
@@ -92,10 +109,19 @@ class FirestoreService {
   Future<List<MarketModel>> getMarketsFromCloud(String userId) async {
     final ref = _getMarketsRef(userId);
     if (ref == null) return [];
+
     final snapshot = await ref.get();
-    return snapshot.docs
-        .map((doc) => MarketModel.fromJson(doc.data()))
-        .toList();
+    final results = <MarketModel>[];
+
+    for (final doc in snapshot.docs) {
+      try {
+        results.add(MarketModel.fromJson(doc.data()));
+      } catch (_) {
+        // Ignora documentos com formato inválido
+      }
+    }
+
+    return results;
   }
 
   Future<void> deleteMarketFromCloud(String userId, String marketId) async {
@@ -119,5 +145,29 @@ class FirestoreService {
     }
 
     await batch.commit();
+  }
+
+  /// Limpa todos os dados do utilizador na nuvem
+  Future<void> clearAllUserData(String userId) async {
+    _ensureInitialized();
+    if (_firestore == null) return;
+
+    // Limpar histórico
+    final historyRef = _getHistoryRef(userId);
+    if (historyRef != null) {
+      final historyDocs = await historyRef.get();
+      for (final doc in historyDocs.docs) {
+        await doc.reference.delete();
+      }
+    }
+
+    // Limpar mercados
+    final marketsRef = _getMarketsRef(userId);
+    if (marketsRef != null) {
+      final marketsDocs = await marketsRef.get();
+      for (final doc in marketsDocs.docs) {
+        await doc.reference.delete();
+      }
+    }
   }
 }

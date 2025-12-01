@@ -69,6 +69,52 @@ class SyncViewModel extends StateNotifier<SyncState> {
   void clearError() {
     state = state.copyWith(error: null);
   }
+
+  /// Limpa todos os dados da nuvem
+  Future<bool> clearCloudData() async {
+    state = state.copyWith(isSyncing: true, error: null);
+    try {
+      final syncService = _ref.read(syncServiceProvider);
+
+      if (!syncService.isAuthenticated) {
+        state = state.copyWith(
+          isSyncing: false,
+          error: 'Utilizador não autenticado',
+        );
+        return false;
+      }
+
+      await syncService.clearCloudData();
+      state = state.copyWith(isSyncing: false);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isSyncing: false, error: e.toString());
+      return false;
+    }
+  }
+
+  /// Transfere dados da nuvem para o dispositivo
+  Future<bool> downloadFromCloud() async {
+    state = state.copyWith(isSyncing: true, error: null);
+    try {
+      final syncService = _ref.read(syncServiceProvider);
+
+      if (!syncService.isAuthenticated) {
+        state = state.copyWith(
+          isSyncing: false,
+          error: 'Utilizador não autenticado',
+        );
+        return false;
+      }
+
+      await syncService.downloadAndReplaceLocalData();
+      state = state.copyWith(isSyncing: false, lastSyncAt: DateTime.now());
+      return true;
+    } catch (e) {
+      state = state.copyWith(isSyncing: false, error: e.toString());
+      return false;
+    }
+  }
 }
 
 final syncViewModelProvider = StateNotifierProvider<SyncViewModel, SyncState>((

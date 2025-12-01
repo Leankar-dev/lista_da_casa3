@@ -9,7 +9,6 @@ import '../../../core/utils/extensions.dart';
 import '../../../core/utils/snackbar_helper.dart';
 import '../../../domain/entities/shopping_list.dart';
 import '../../viewmodels/history_viewmodel.dart';
-import '../../viewmodels/sync_viewmodel.dart';
 import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/loading_indicator.dart';
 import 'history_detail_screen.dart';
@@ -21,7 +20,6 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(historyViewModelProvider);
-    final syncState = ref.watch(syncViewModelProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -49,36 +47,6 @@ class HistoryScreen extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // leading: IconButton(
-            //   icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-            //   onPressed: () =>
-            //       Navigator.of(context).popUntil((route) => route.isFirst),
-            // ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: syncState.isSyncing
-                    ? const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      )
-                    : IconButton(
-                        icon: const Icon(
-                          Icons.cloud_upload_outlined,
-                          color: AppColors.primary,
-                        ),
-                        tooltip: 'Sincronizar com a nuvem',
-                        onPressed: () => _syncToCloud(context, ref),
-                      ),
-              ),
-            ],
           ),
         ),
       ),
@@ -162,27 +130,6 @@ class HistoryScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _syncToCloud(BuildContext context, WidgetRef ref) async {
-    final success = await ref
-        .read(syncViewModelProvider.notifier)
-        .syncHistoryOnly();
-
-    if (context.mounted) {
-      if (success) {
-        SnackbarHelper.showSuccess(
-          context,
-          'Histórico sincronizado com sucesso!',
-        );
-      } else {
-        final error = ref.read(syncViewModelProvider).error;
-        SnackbarHelper.showError(
-          context,
-          error ?? 'Erro ao sincronizar. Verifique a sua ligação.',
-        );
-      }
-    }
   }
 }
 

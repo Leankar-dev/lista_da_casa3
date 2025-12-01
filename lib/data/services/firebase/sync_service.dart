@@ -82,4 +82,43 @@ class SyncService {
     final marketModels = await _firestoreService.getMarketsFromCloud(userId!);
     return marketModels.map((model) => model.toEntity()).toList();
   }
+
+  /// Limpa todos os dados do utilizador na nuvem
+  Future<void> clearCloudData() async {
+    if (!isFirebaseAvailable) return;
+    if (!isAuthenticated || userId == null) {
+      throw Exception('Utilizador não autenticado');
+    }
+
+    await _firestoreService.clearAllUserData(userId!);
+  }
+
+  /// Transfere dados da nuvem e substitui os dados locais
+  Future<void> downloadAndReplaceLocalData() async {
+    if (!isFirebaseAvailable) return;
+    if (!isAuthenticated || userId == null) {
+      throw Exception('Utilizador não autenticado');
+    }
+
+    // Baixar histórico da nuvem
+    final cloudHistory = await downloadHistoryFromCloud();
+
+    // Baixar mercados da nuvem
+    final cloudMarkets = await downloadMarketsFromCloud();
+
+    // Limpar dados locais e substituir pelos da nuvem
+    await _shoppingListRepository.clearHistory();
+    for (final list in cloudHistory) {
+      await _shoppingListRepository.saveToHistory(list);
+    }
+
+    // Substituir mercados
+    final localMarkets = await _marketRepository.getAllMarkets();
+    for (final market in localMarkets) {
+      await _marketRepository.deleteMarket(market.id);
+    }
+    for (final market in cloudMarkets) {
+      await _marketRepository.addMarket(market);
+    }
+  }
 }

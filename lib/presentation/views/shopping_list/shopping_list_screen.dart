@@ -32,35 +32,10 @@ class ShoppingListScreen extends ConsumerWidget {
       appBar: CustomNeumorphicAppBar(
         title: AppStrings.appName,
         actions: [
-          if (authState.isAuthenticated)
-            NeumorphicAppBarAction(
-              icon: syncState.isSyncing
-                  ? Icons.sync
-                  : Icons.cloud_upload_outlined,
-              iconColor: syncState.isSyncing
-                  ? AppColors.primary
-                  : AppColors.textPrimary,
-              onPressed: syncState.isSyncing
-                  ? null
-                  : () async {
-                      final success = await ref
-                          .read(syncViewModelProvider.notifier)
-                          .syncToCloud();
-                      if (context.mounted) {
-                        if (success) {
-                          SnackbarHelper.showSuccess(
-                            context,
-                            AppStrings.syncSuccess,
-                          );
-                        } else {
-                          SnackbarHelper.showError(
-                            context,
-                            AppStrings.syncError,
-                          );
-                        }
-                      }
-                    },
-            ),
+          if (authState.isAuthenticated) ...[
+            // Menu de sincronização (PopupMenuButton)
+            _SyncPopupMenu(syncState: syncState),
+          ],
         ],
       ),
       body: state.isLoading
@@ -513,6 +488,228 @@ class _EmptyListWidget extends StatelessWidget {
           const Text(
             AppStrings.addNewItem,
             style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+enum _SyncMenuOption { uploadToCloud, downloadFromCloud, clearCloud }
+
+class _SyncPopupMenu extends ConsumerWidget {
+  final SyncState syncState;
+
+  const _SyncPopupMenu({required this.syncState});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PopupMenuButton<_SyncMenuOption>(
+      icon: syncState.isSyncing
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.primary,
+              ),
+            )
+          : const Icon(Icons.more_vert, color: AppColors.textPrimary, size: 24),
+      enabled: !syncState.isSyncing,
+      tooltip: AppStrings.syncMenu,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: AppColors.background,
+      elevation: 8,
+      onSelected: (option) => _handleMenuSelection(context, ref, option),
+      itemBuilder: (context) => [
+        PopupMenuItem<_SyncMenuOption>(
+          value: _SyncMenuOption.uploadToCloud,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.cloud_upload_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                AppStrings.saveToCloud,
+                style: const TextStyle(color: AppColors.textPrimary),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem<_SyncMenuOption>(
+          value: _SyncMenuOption.downloadFromCloud,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.cloud_download_outlined,
+                color: AppColors.info,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                AppStrings.downloadFromCloud,
+                style: const TextStyle(color: AppColors.textPrimary),
+              ),
+            ],
+          ),
+        ),
+        const PopupMenuDivider(),
+        PopupMenuItem<_SyncMenuOption>(
+          value: _SyncMenuOption.clearCloud,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.cloud_off_outlined,
+                color: AppColors.error,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                AppStrings.clearCloud,
+                style: const TextStyle(color: AppColors.error),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _handleMenuSelection(
+    BuildContext context,
+    WidgetRef ref,
+    _SyncMenuOption option,
+  ) {
+    switch (option) {
+      case _SyncMenuOption.uploadToCloud:
+        _uploadToCloud(context, ref);
+        break;
+      case _SyncMenuOption.downloadFromCloud:
+        _showDownloadDialog(context, ref);
+        break;
+      case _SyncMenuOption.clearCloud:
+        _showClearCloudDialog(context, ref);
+        break;
+    }
+  }
+
+  Future<void> _uploadToCloud(BuildContext context, WidgetRef ref) async {
+    final success = await ref
+        .read(syncViewModelProvider.notifier)
+        .syncToCloud();
+    if (context.mounted) {
+      if (success) {
+        SnackbarHelper.showSuccess(context, AppStrings.syncSuccess);
+      } else {
+        SnackbarHelper.showError(context, AppStrings.syncError);
+      }
+    }
+  }
+
+  void _showDownloadDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.background,
+        title: Row(
+          children: [
+            const Icon(
+              Icons.cloud_download_outlined,
+              color: AppColors.info,
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            Text(AppStrings.downloadFromCloud),
+          ],
+        ),
+        content: Text(
+          AppStrings.downloadFromCloudConfirm,
+          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              final success = await ref
+                  .read(syncViewModelProvider.notifier)
+                  .downloadFromCloud();
+              if (context.mounted) {
+                if (success) {
+                  // Recarregar os dados
+                  ref.read(historyViewModelProvider.notifier).loadHistory();
+                  ref.read(marketViewModelProvider.notifier).loadMarkets();
+                  SnackbarHelper.showSuccess(
+                    context,
+                    AppStrings.downloadSuccess,
+                  );
+                } else {
+                  SnackbarHelper.showError(context, AppStrings.downloadError);
+                }
+              }
+            },
+            child: Text(
+              AppStrings.confirm,
+              style: const TextStyle(color: AppColors.primary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showClearCloudDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.background,
+        title: Row(
+          children: [
+            Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warning,
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            const Text(AppStrings.clearCloud),
+          ],
+        ),
+        content: const Text(
+          AppStrings.clearCloudConfirm,
+          style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              final success = await ref
+                  .read(syncViewModelProvider.notifier)
+                  .clearCloudData();
+              if (context.mounted) {
+                if (success) {
+                  SnackbarHelper.showSuccess(
+                    context,
+                    AppStrings.clearCloudSuccess,
+                  );
+                } else {
+                  SnackbarHelper.showError(context, AppStrings.clearCloudError);
+                }
+              }
+            },
+            child: Text(
+              AppStrings.delete,
+              style: TextStyle(color: AppColors.error),
+            ),
           ),
         ],
       ),

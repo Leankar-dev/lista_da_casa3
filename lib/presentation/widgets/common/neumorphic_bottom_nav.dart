@@ -21,6 +21,7 @@ class NeumorphicBottomNav extends StatelessWidget {
         depth: 8,
         intensity: AppConstants.neumorphicIntensity,
         boxShape: const NeumorphicBoxShape.rect(),
+        color: const Color(0xFF7A8A99),
       ),
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: SafeArea(
@@ -87,14 +88,16 @@ class _NavItem extends StatelessWidget {
                 intensity: AppConstants.neumorphicIntensity,
                 boxShape: const NeumorphicBoxShape.circle(),
                 color: isSelected
-                    ? AppColors.primary.withValues(alpha: 0.1)
-                    : null,
+                    ? const Color(0xFF3D4D5C)
+                    : const Color(0xFF5A6A79),
               ),
               padding: const EdgeInsets.all(12),
               child: Icon(
                 isSelected ? selectedIcon : icon,
                 size: 24,
-                color: isSelected ? AppColors.primary : AppColors.textLight,
+                color: isSelected
+                    ? const Color(0xFF1A2A3A)
+                    : AppColors.textLight,
               ),
             ),
             const SizedBox(height: 4),
@@ -103,7 +106,9 @@ class _NavItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected ? AppColors.primary : AppColors.textLight,
+                color: isSelected
+                    ? const Color(0xFF1A2A3A)
+                    : AppColors.textLight,
               ),
             ),
           ],

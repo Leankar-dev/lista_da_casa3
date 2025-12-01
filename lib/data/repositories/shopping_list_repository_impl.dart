@@ -158,4 +158,47 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
       return result;
     });
   }
+
+  @override
+  Future<void> clearHistory() async {
+    // Apaga todas as listas finalizadas e seus itens
+    final history = await _database.getShoppingHistory();
+    for (final list in history) {
+      await _database.deleteShoppingItemsByListId(list.id);
+      await _database.deleteShoppingList(list.id);
+    }
+  }
+
+  @override
+  Future<void> saveToHistory(ShoppingList list) async {
+    // Inserir a lista
+    final listCompanion = ShoppingListsTableCompanion.insert(
+      id: list.id,
+      name: Value(list.name),
+      marketId: Value(list.marketId),
+      marketName: Value(list.marketName),
+      status: const Value('finalized'),
+      createdAt: Value(list.createdAt),
+      updatedAt: Value(list.updatedAt),
+      finalizedAt: Value(list.finalizedAt),
+    );
+    await _database.insertShoppingList(listCompanion);
+
+    // Inserir os itens da lista
+    for (final item in list.items) {
+      final itemCompanion = ShoppingItemsTableCompanion.insert(
+        id: item.id,
+        shoppingListId: list.id,
+        name: item.name,
+        quantity: Value(item.quantity),
+        price: Value(item.price),
+        category: Value(item.category),
+        isPurchased: Value(item.isPurchased),
+        observations: Value(item.observations),
+        createdAt: Value(item.createdAt),
+        updatedAt: Value(item.updatedAt),
+      );
+      await _database.insertShoppingItem(itemCompanion);
+    }
+  }
 }
