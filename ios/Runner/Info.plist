@@ -45,5 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- App Transport Security - Força HTTPS e TLS 1.2+ -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<!-- Não permite conexões HTTP não seguras -->
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<!-- Requer Forward Secrecy -->
+		<key>NSRequiresCertificateTransparency</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
