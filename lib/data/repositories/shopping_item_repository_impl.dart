@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
+import '../../core/utils/app_logger.dart';
 import '../../domain/entities/shopping_item.dart';
 import '../../domain/repositories/i_shopping_item_repository.dart';
 import '../database/app_database.dart';
@@ -12,9 +12,11 @@ class ShoppingItemRepositoryImpl implements IShoppingItemRepository {
 
   @override
   Future<List<ShoppingItem>> getItemsByListId(String listId) async {
-    debugPrint('📦 [Repository] Getting items for listId: $listId');
+    AppLogger.shoppingItem(
+      'Getting items for listId: ${AppLogger.sanitize(listId)}',
+    );
     final items = await _database.getShoppingItemsByListId(listId);
-    debugPrint('📦 [Repository] Found ${items.length} items');
+    AppLogger.shoppingItem('Found ${items.length} items');
     return items.map((item) => ShoppingItemModel.fromDatabase(item)).toList();
   }
 
@@ -27,8 +29,8 @@ class ShoppingItemRepositoryImpl implements IShoppingItemRepository {
 
   @override
   Future<void> addItem(ShoppingItem item) async {
-    debugPrint(
-      '📦 [Repository] Adding item: ${item.name} to list: ${item.shoppingListId}',
+    AppLogger.shoppingItem(
+      'Adding item: ${item.name} to list: ${AppLogger.sanitize(item.shoppingListId)}',
     );
     final companion = ShoppingItemsTableCompanion.insert(
       id: item.id,
@@ -43,7 +45,7 @@ class ShoppingItemRepositoryImpl implements IShoppingItemRepository {
       updatedAt: Value(item.updatedAt),
     );
     final result = await _database.insertShoppingItem(companion);
-    debugPrint('📦 [Repository] Insert result: $result');
+    AppLogger.shoppingItem('Insert result: $result');
   }
 
   @override

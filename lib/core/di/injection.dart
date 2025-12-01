@@ -6,9 +6,15 @@ import '../../data/repositories/market_repository_impl.dart';
 import '../../data/services/firebase/firebase_auth_service.dart';
 import '../../data/services/firebase/firestore_service.dart';
 import '../../data/services/firebase/sync_service.dart';
+import '../../data/services/secure_storage_service.dart';
 import '../../domain/repositories/i_shopping_item_repository.dart';
 import '../../domain/repositories/i_shopping_list_repository.dart';
 import '../../domain/repositories/i_market_repository.dart';
+
+/// Provider para o serviço de armazenamento seguro
+final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {
+  return SecureStorageService();
+});
 
 final databaseProvider = Provider<AppDatabase>((ref) {
   final database = AppDatabase();

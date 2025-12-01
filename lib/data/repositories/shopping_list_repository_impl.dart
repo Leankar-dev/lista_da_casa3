@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
+import '../../core/utils/app_logger.dart';
 import '../../domain/entities/shopping_list.dart';
 import '../../domain/repositories/i_shopping_list_repository.dart';
 import '../database/app_database.dart';
@@ -27,15 +27,15 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
 
   @override
   Future<ShoppingList?> getActiveList() async {
-    debugPrint('📋 [Repository] Getting active list...');
+    AppLogger.shoppingList('Getting active list...');
     final list = await _database.getActiveShoppingList();
     if (list == null) {
-      debugPrint('📋 [Repository] No active list found');
+      AppLogger.shoppingList('No active list found');
       return null;
     }
-    debugPrint('📋 [Repository] Found active list: ${list.id}');
+    AppLogger.shoppingList('Found active list: ${AppLogger.sanitize(list.id)}');
     final items = await _database.getShoppingItemsByListId(list.id);
-    debugPrint('📋 [Repository] Active list has ${items.length} items');
+    AppLogger.shoppingList('Active list has ${items.length} items');
     final itemEntities = items
         .map((item) => ShoppingItemModel.fromDatabase(item))
         .toList();
@@ -69,7 +69,9 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
 
   @override
   Future<void> createList(ShoppingList list) async {
-    debugPrint('📋 [Repository] Creating list: ${list.id} - ${list.name}');
+    AppLogger.shoppingList(
+      'Creating list: ${AppLogger.sanitize(list.id)} - ${list.name}',
+    );
     final companion = ShoppingListsTableCompanion.insert(
       id: list.id,
       name: Value(list.name),
@@ -83,7 +85,7 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
       finalizedAt: Value(list.finalizedAt),
     );
     final result = await _database.insertShoppingList(companion);
-    debugPrint('📋 [Repository] Create list result: $result');
+    AppLogger.shoppingList('Create list result: $result');
   }
 
   @override

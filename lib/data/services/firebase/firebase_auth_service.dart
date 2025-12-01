@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '../secure_storage_service.dart';
 
 class FirebaseAuthService {
   FirebaseAuth? _auth;
@@ -45,10 +46,20 @@ class FirebaseAuthService {
     _ensureInitialized();
     if (_auth == null) return null;
     try {
-      return await _auth!.signInWithEmailAndPassword(
+      final credential = await _auth!.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      // Armazena dados do usuário de forma segura
+      if (credential.user != null) {
+        await SecureStorageService.saveUserId(credential.user!.uid);
+        if (credential.user!.email != null) {
+          await SecureStorageService.saveUserEmail(credential.user!.email!);
+        }
+      }
+
+      return credential;
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
     } catch (e) {
@@ -63,10 +74,20 @@ class FirebaseAuthService {
     _ensureInitialized();
     if (_auth == null) return null;
     try {
-      return await _auth!.createUserWithEmailAndPassword(
+      final credential = await _auth!.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      // Armazena dados do usuário de forma segura
+      if (credential.user != null) {
+        await SecureStorageService.saveUserId(credential.user!.uid);
+        if (credential.user!.email != null) {
+          await SecureStorageService.saveUserEmail(credential.user!.email!);
+        }
+      }
+
+      return credential;
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
     } catch (e) {
@@ -76,6 +97,8 @@ class FirebaseAuthService {
 
   Future<void> signOut() async {
     _ensureInitialized();
+    // Limpa dados sensíveis do armazenamento seguro
+    await SecureStorageService.clearUserData();
     await _auth?.signOut();
   }
 
