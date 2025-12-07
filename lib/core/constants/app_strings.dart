@@ -31,6 +31,8 @@ abstract class AppStrings {
 
   static const String purchaseHistory = 'Histórico de Compras';
   static const String purchaseDate = 'Data da Compra';
+  static const String listDate = 'Data da Lista';
+  static const String selectDate = 'Selecionar Data';
   static const String market = 'Mercado';
   static const String totalValue = 'Valor Total';
   static const String viewDetails = 'Ver Detalhes';

@@ -170,6 +170,24 @@ class ShoppingListViewModel extends StateNotifier<ShoppingListState> {
     }
   }
 
+  Future<void> updateListDate(DateTime date) async {
+    if (state.activeList == null) return;
+
+    try {
+      final repository = _ref.read(shoppingListRepositoryProvider);
+      final updatedList = state.activeList!.copyWith(
+        createdAt: date,
+        updatedAt: DateTime.now(),
+      );
+      await repository.updateList(updatedList);
+      state = state.copyWith(
+        activeList: updatedList.copyWith(items: state.items),
+      );
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
   void clearError() {
     state = state.copyWith(error: null);
   }

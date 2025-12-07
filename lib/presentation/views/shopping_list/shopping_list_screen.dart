@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/formatters.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../core/utils/snackbar_helper.dart';
 import '../../../domain/entities/shopping_item.dart';
 import '../../viewmodels/shopping_list_viewmodel.dart';
@@ -33,7 +34,6 @@ class ShoppingListScreen extends ConsumerWidget {
         title: AppStrings.appName,
         actions: [
           if (authState.isAuthenticated) ...[
-            // Menu de sincronização (PopupMenuButton)
             _SyncPopupMenu(syncState: syncState),
           ],
         ],
@@ -42,6 +42,14 @@ class ShoppingListScreen extends ConsumerWidget {
           ? const LoadingIndicator()
           : Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: AppConstants.defaultPadding,
+                    right: AppConstants.defaultPadding,
+                    top: AppConstants.defaultPadding,
+                  ),
+                  child: _DateSelectorCard(state: state),
+                ),
                 if (state.items.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(AppConstants.defaultPadding),
@@ -359,6 +367,96 @@ class _FinalizeDialogState extends ConsumerState<_FinalizeDialog> {
         ),
       ],
     );
+  }
+}
+
+class _DateSelectorCard extends ConsumerWidget {
+  final ShoppingListState state;
+
+  const _DateSelectorCard({required this.state});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listDate = state.activeList?.createdAt ?? DateTime.now();
+
+    return GestureDetector(
+      onTap: () => _selectDate(context, ref, listDate),
+      child: NeumorphicCard(
+        child: Row(
+          children: [
+            const Icon(
+              Icons.calendar_today,
+              size: 20,
+              color: AppColors.primary,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    AppStrings.listDate,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  Text(
+                    listDate.toFormattedDate(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.edit_calendar,
+              size: 20,
+              color: AppColors.textSecondary,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectDate(
+    BuildContext context,
+    WidgetRef ref,
+    DateTime currentDate,
+  ) async {
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: currentDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+      locale: const Locale('pt', 'PT'),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primary,
+              onPrimary: AppColors.textLight,
+              surface: AppColors.background,
+              onSurface: AppColors.textPrimary,
+            ),
+            dialogTheme: const DialogThemeData(
+              backgroundColor: AppColors.background,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDate != null && selectedDate != currentDate) {
+      await ref
+          .read(shoppingListViewModelProvider.notifier)
+          .updateListDate(selectedDate);
+    }
   }
 }
 
