@@ -11,7 +11,6 @@ import '../../domain/repositories/i_shopping_item_repository.dart';
 import '../../domain/repositories/i_shopping_list_repository.dart';
 import '../../domain/repositories/i_market_repository.dart';
 
-/// Provider para o serviço de armazenamento seguro
 final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {
   return SecureStorageService();
 });

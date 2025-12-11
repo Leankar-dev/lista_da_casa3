@@ -51,7 +51,6 @@ class FirebaseAuthService {
         password: password,
       );
 
-      // Armazena dados do usuário de forma segura
       if (credential.user != null) {
         await SecureStorageService.saveUserId(credential.user!.uid);
         if (credential.user!.email != null) {
@@ -79,7 +78,6 @@ class FirebaseAuthService {
         password: password,
       );
 
-      // Armazena dados do usuário de forma segura
       if (credential.user != null) {
         await SecureStorageService.saveUserId(credential.user!.uid);
         if (credential.user!.email != null) {
@@ -97,7 +95,6 @@ class FirebaseAuthService {
 
   Future<void> signOut() async {
     _ensureInitialized();
-    // Limpa dados sensíveis do armazenamento seguro
     await SecureStorageService.clearUserData();
     await _auth?.signOut();
   }
@@ -118,6 +115,8 @@ class FirebaseAuthService {
         return 'Utilizador não encontrado';
       case 'wrong-password':
         return 'Palavra-passe incorreta';
+      case 'invalid-credential':
+        return 'Email ou palavra-passe incorretos';
       case 'email-already-in-use':
         return 'Este email já está em uso';
       case 'invalid-email':
@@ -128,6 +127,8 @@ class FirebaseAuthService {
         return 'Utilizador desativado';
       case 'too-many-requests':
         return 'Demasiadas tentativas. Tente mais tarde.';
+      case 'network-request-failed':
+        return 'Erro de ligação à internet';
       default:
         return 'Erro de autenticação: ${e.message}';
     }

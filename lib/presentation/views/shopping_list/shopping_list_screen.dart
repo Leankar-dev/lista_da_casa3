@@ -740,7 +740,6 @@ class _SyncPopupMenu extends ConsumerWidget {
                   .downloadFromCloud();
               if (context.mounted) {
                 if (success) {
-                  // Recarregar os dados
                   ref.read(historyViewModelProvider.notifier).loadHistory();
                   ref.read(marketViewModelProvider.notifier).loadMarkets();
                   SnackbarHelper.showSuccess(

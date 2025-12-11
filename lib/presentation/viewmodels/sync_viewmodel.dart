@@ -70,7 +70,6 @@ class SyncViewModel extends StateNotifier<SyncState> {
     state = state.copyWith(error: null);
   }
 
-  /// Limpa todos os dados da nuvem
   Future<bool> clearCloudData() async {
     state = state.copyWith(isSyncing: true, error: null);
     try {
@@ -93,7 +92,6 @@ class SyncViewModel extends StateNotifier<SyncState> {
     }
   }
 
-  /// Transfere dados da nuvem para o dispositivo
   Future<bool> downloadFromCloud() async {
     state = state.copyWith(isSyncing: true, error: null);
     try {

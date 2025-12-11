@@ -63,7 +63,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
         email: email,
         password: password,
       );
-      // Atualiza o estado com o user após login bem-sucedido
       state = state.copyWith(isLoading: false, user: () => result?.user);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -82,7 +81,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
         email: email,
         password: password,
       );
-      // Atualiza o estado com o user após registro bem-sucedido
       state = state.copyWith(isLoading: false, user: () => result?.user);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());

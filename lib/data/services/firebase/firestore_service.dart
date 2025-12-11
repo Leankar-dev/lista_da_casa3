@@ -61,12 +61,9 @@ class FirestoreService {
     for (final doc in snapshot.docs) {
       try {
         results.add(ShoppingListModel.fromJson(doc.data()));
-      } catch (_) {
-        // Ignora documentos com formato inválido
-      }
+      } catch (_) {}
     }
 
-    // Ordenar por finalizedAt
     results.sort((a, b) {
       if (a.finalizedAt == null && b.finalizedAt == null) return 0;
       if (a.finalizedAt == null) return 1;
@@ -116,9 +113,7 @@ class FirestoreService {
     for (final doc in snapshot.docs) {
       try {
         results.add(MarketModel.fromJson(doc.data()));
-      } catch (_) {
-        // Ignora documentos com formato inválido
-      }
+      } catch (_) {}
     }
 
     return results;
@@ -147,12 +142,10 @@ class FirestoreService {
     await batch.commit();
   }
 
-  /// Limpa todos os dados do utilizador na nuvem
   Future<void> clearAllUserData(String userId) async {
     _ensureInitialized();
     if (_firestore == null) return;
 
-    // Limpar histórico
     final historyRef = _getHistoryRef(userId);
     if (historyRef != null) {
       final historyDocs = await historyRef.get();
@@ -161,7 +154,6 @@ class FirestoreService {
       }
     }
 
-    // Limpar mercados
     final marketsRef = _getMarketsRef(userId);
     if (marketsRef != null) {
       final marketsDocs = await marketsRef.get();

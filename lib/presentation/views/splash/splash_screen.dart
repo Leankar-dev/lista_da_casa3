@@ -51,7 +51,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo with pulse animation
             Container(
                   width: 150,
                   height: 150,

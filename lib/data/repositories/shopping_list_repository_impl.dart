@@ -128,7 +128,7 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
         status: const Value('finalized'),
         createdAt: Value(list.createdAt),
         updatedAt: Value(DateTime.now()),
-        finalizedAt: Value(DateTime.now()),
+        finalizedAt: Value(list.createdAt),
       );
       await _database.updateShoppingList(companion);
     }
@@ -163,7 +163,6 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
 
   @override
   Future<void> clearHistory() async {
-    // Apaga todas as listas finalizadas e seus itens
     final history = await _database.getShoppingHistory();
     for (final list in history) {
       await _database.deleteShoppingItemsByListId(list.id);
@@ -173,7 +172,6 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
 
   @override
   Future<void> saveToHistory(ShoppingList list) async {
-    // Inserir a lista
     final listCompanion = ShoppingListsTableCompanion.insert(
       id: list.id,
       name: Value(list.name),
@@ -186,7 +184,6 @@ class ShoppingListRepositoryImpl implements IShoppingListRepository {
     );
     await _database.insertShoppingList(listCompanion);
 
-    // Inserir os itens da lista
     for (final item in list.items) {
       final itemCompanion = ShoppingItemsTableCompanion.insert(
         id: item.id,

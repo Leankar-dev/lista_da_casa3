@@ -54,7 +54,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-                // Logo
                 Center(
                   child: Neumorphic(
                     style: NeumorphicStyle(
@@ -81,7 +80,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Título
                 const Center(
                   child: Text(
                     AppStrings.appName,
@@ -104,7 +102,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                // Campo Email
                 NeumorphicTextField(
                   controller: _emailController,
                   labelText: AppStrings.email,
@@ -115,7 +112,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   validator: Validators.email,
                 ),
                 const SizedBox(height: AppConstants.defaultPadding),
-                // Campo Senha
                 NeumorphicTextField(
                   controller: _passwordController,
                   labelText: AppStrings.password,
@@ -135,7 +131,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onSubmitted: (_) => _login(),
                 ),
                 const SizedBox(height: 12),
-                // Esqueceu a senha
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -147,7 +142,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Botão Login
                 NeumorphicPrimaryButton(
                   text: AppStrings.login,
                   icon: Icons.login,
@@ -155,7 +149,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   isLoading: authState.isLoading,
                 ),
                 const SizedBox(height: 24),
-                // Divisor
                 Row(
                   children: [
                     Expanded(
@@ -183,7 +176,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                // Botão Criar Conta
                 NeumorphicButtonWidget(
                   text: 'Criar nova conta',
                   icon: Icons.person_add_outlined,
@@ -213,13 +205,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             password: _passwordController.text,
           );
 
-      // Verificar se login foi bem-sucedido e navegar
       final authState = ref.read(authViewModelProvider);
       if (authState.isAuthenticated && mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
-        // Sincronização em background
         ref.read(syncViewModelProvider.notifier).syncToCloud();
       }
     }

@@ -120,7 +120,6 @@ class HistoryDetailScreen extends StatelessWidget {
                 ),
               );
             }),
-            // Espaço extra no final para o último item não ficar cortado
             const SizedBox(height: 32),
           ],
         ),

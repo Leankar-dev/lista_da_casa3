@@ -38,7 +38,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authViewModelProvider);
 
-    // Listener apenas para erros
     ref.listen<AuthState>(authViewModelProvider, (previous, next) {
       if (next.error != null) {
         SnackbarHelper.showError(context, _getErrorMessage(next.error!));
@@ -51,7 +50,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header com botão voltar
             Padding(
               padding: const EdgeInsets.all(AppConstants.defaultPadding),
               child: Row(
@@ -90,7 +88,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Ícone
                       Center(
                         child: Neumorphic(
                           style: NeumorphicStyle(
@@ -109,7 +106,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Descrição
                       const Center(
                         child: Text(
                           'Crie uma conta para sincronizar\nos seus dados na nuvem',
@@ -122,7 +118,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // Campo Email
                       NeumorphicTextField(
                         controller: _emailController,
                         labelText: '${AppStrings.email} *',
@@ -134,7 +129,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: AppConstants.defaultPadding),
 
-                      // Campo Senha
                       NeumorphicTextField(
                         controller: _passwordController,
                         labelText: '${AppStrings.password} *',
@@ -154,7 +148,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: AppConstants.defaultPadding),
 
-                      // Campo Confirmar Senha
                       NeumorphicTextField(
                         controller: _confirmPasswordController,
                         labelText: 'Confirmar Palavra-passe *',
@@ -175,7 +168,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Requisitos da senha
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -215,7 +207,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // Botão Registrar
                       NeumorphicPrimaryButton(
                         text: 'Criar Conta',
                         icon: Icons.person_add,
@@ -224,7 +215,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Link para login
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -324,10 +314,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             password: _passwordController.text,
           );
 
-      // Verificar se o registro foi bem-sucedido e navegar
       final authState = ref.read(authViewModelProvider);
       if (authState.isAuthenticated && mounted) {
-        // Sincronização automática em background (não bloqueia)
         ref.read(syncViewModelProvider.notifier).syncToCloud();
 
         Navigator.of(context).pushAndRemoveUntil(
