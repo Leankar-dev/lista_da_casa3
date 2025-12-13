@@ -20,13 +20,13 @@ class AuthState {
   AuthState copyWith({
     User? Function()? user,
     bool? isLoading,
-    String? error,
+    String? Function()? error,
     bool? isFirebaseAvailable,
   }) {
     return AuthState(
       user: user != null ? user() : this.user,
       isLoading: isLoading ?? this.isLoading,
-      error: error,
+      error: error != null ? error() : this.error,
       isFirebaseAvailable: isFirebaseAvailable ?? this.isFirebaseAvailable,
     );
   }
@@ -56,29 +56,19 @@ class AuthViewModel extends StateNotifier<AuthState> {
     required String password,
   }) async {
     if (!state.isFirebaseAvailable) return false;
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
     try {
       final authService = _ref.read(firebaseAuthServiceProvider);
       final result = await authService.signInWithEmail(
         email: email,
         password: password,
       );
-      if (result?.user != null) {
-        state = state.copyWith(
-          isLoading: false,
-          user: () => result?.user,
-          error: null,
-        );
-        return true;
-      } else {
-        state = state.copyWith(
-          isLoading: false,
-          error: 'Erro ao fazer login. Tente novamente.',
-        );
-        return false;
-      }
+      // O authStateChanges listener já atualiza o user,
+      // então só precisamos atualizar o loading
+      state = state.copyWith(isLoading: false, error: () => null);
+      return result?.user != null;
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(isLoading: false, error: () => e.toString());
       return false;
     }
   }
@@ -88,7 +78,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     required String password,
   }) async {
     if (!state.isFirebaseAvailable) return;
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
     try {
       final authService = _ref.read(firebaseAuthServiceProvider);
       final result = await authService.registerWithEmail(
@@ -97,7 +87,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
       );
       state = state.copyWith(isLoading: false, user: () => result?.user);
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(isLoading: false, error: () => e.toString());
     }
   }
 
@@ -108,24 +98,24 @@ class AuthViewModel extends StateNotifier<AuthState> {
       await authService.signOut();
       state = state.copyWith(user: () => null);
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      state = state.copyWith(error: () => e.toString());
     }
   }
 
   Future<void> sendPasswordResetEmail(String email) async {
     if (!state.isFirebaseAvailable) return;
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
     try {
       final authService = _ref.read(firebaseAuthServiceProvider);
       await authService.sendPasswordResetEmail(email);
       state = state.copyWith(isLoading: false);
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(isLoading: false, error: () => e.toString());
     }
   }
 
   void clearError() {
-    state = state.copyWith(error: null);
+    state = state.copyWith(error: () => null);
   }
 }
 

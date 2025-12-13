@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import '../../../core/constants/app_colors.dart';
@@ -38,6 +39,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref.listen<AuthState>(authViewModelProvider, (previous, next) {
       if (next.error != null) {
+        debugPrint('LOGIN ERROR: ${next.error}');
         SnackbarHelper.showError(context, _getErrorMessage(next.error!));
         ref.read(authViewModelProvider.notifier).clearError();
       }
