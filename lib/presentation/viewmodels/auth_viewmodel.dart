@@ -51,11 +51,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> signInWithEmail({
+  Future<bool> signInWithEmail({
     required String email,
     required String password,
   }) async {
-    if (!state.isFirebaseAvailable) return;
+    if (!state.isFirebaseAvailable) return false;
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authService = _ref.read(firebaseAuthServiceProvider);
@@ -63,9 +63,23 @@ class AuthViewModel extends StateNotifier<AuthState> {
         email: email,
         password: password,
       );
-      state = state.copyWith(isLoading: false, user: () => result?.user);
+      if (result?.user != null) {
+        state = state.copyWith(
+          isLoading: false,
+          user: () => result?.user,
+          error: null,
+        );
+        return true;
+      } else {
+        state = state.copyWith(
+          isLoading: false,
+          error: 'Erro ao fazer login. Tente novamente.',
+        );
+        return false;
+      }
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
     }
   }
 

@@ -198,15 +198,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
-      await ref
+      ref.read(authViewModelProvider.notifier).clearError();
+
+      final success = await ref
           .read(authViewModelProvider.notifier)
           .signInWithEmail(
             email: _emailController.text.trim(),
             password: _passwordController.text,
           );
 
-      final authState = ref.read(authViewModelProvider);
-      if (authState.isAuthenticated && mounted) {
+      if (success && mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
