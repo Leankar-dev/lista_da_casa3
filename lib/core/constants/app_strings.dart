@@ -65,6 +65,7 @@ abstract class AppStrings {
   static const String spendingEvolution = 'Evolução dos Gastos';
   static const String categoryDistribution = 'Distribuição por Categoria';
   static const String monthlySpending = 'Gastos Mensais';
+  static const String monthlyTotals = 'Totais Mensais';
   static const String noData = 'Sem dados para apresentar';
 
   static const String saveToCloud = 'Guardar na Nuvem';

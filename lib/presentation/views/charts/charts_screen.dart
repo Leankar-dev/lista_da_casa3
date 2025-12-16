@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -11,6 +10,7 @@ import '../../viewmodels/history_viewmodel.dart';
 import '../../widgets/common/neumorphic_app_bar.dart';
 import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/loading_indicator.dart';
+import '../reports/monthly_totals_screen.dart';
 
 class ChartsScreen extends ConsumerWidget {
   const ChartsScreen({super.key});
@@ -31,6 +31,15 @@ class ChartsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  _MonthlyTotalsButton(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MonthlyTotalsScreen(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppConstants.largePadding),
                   const Text(
                     AppStrings.spendingEvolution,
                     style: TextStyle(
@@ -334,6 +343,84 @@ class _NoDataWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _MonthlyTotalsButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _MonthlyTotalsButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Neumorphic(
+        style: NeumorphicStyle(
+          depth: 6,
+          intensity: 0.6,
+          boxShape: NeumorphicBoxShape.roundRect(
+            BorderRadius.circular(AppConstants.borderRadius),
+          ),
+          color: AppColors.cardBackground,
+        ),
+        padding: const EdgeInsets.all(AppConstants.defaultPadding),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.calendar_month,
+                size: 28,
+                color: AppColors.primary,
+              ),
+            ),
+            const SizedBox(width: AppConstants.defaultPadding),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.monthlyTotals,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Ver gastos detalhados por mês/ano',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: AppColors.primary,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
