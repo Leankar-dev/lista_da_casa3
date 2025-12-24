@@ -17,6 +17,7 @@ import '../../widgets/common/neumorphic_card.dart';
 import '../../widgets/common/neumorphic_button.dart';
 import '../../widgets/common/loading_indicator.dart';
 import '../../widgets/shopping/shopping_item_tile.dart';
+import '../home/home_screen.dart';
 import 'add_item_screen.dart';
 
 class ShoppingListScreen extends ConsumerWidget {
@@ -32,6 +33,22 @@ class ShoppingListScreen extends ConsumerWidget {
       backgroundColor: AppColors.background,
       appBar: CustomNeumorphicAppBar(
         title: AppStrings.appName,
+        leading: NeumorphicButton(
+          onPressed: () {
+            final scaffoldKey = ref.read(homeScaffoldKeyProvider);
+            scaffoldKey.currentState?.openDrawer();
+          },
+          style: const NeumorphicStyle(
+            depth: 4,
+            boxShape: NeumorphicBoxShape.circle(),
+          ),
+          padding: const EdgeInsets.all(8),
+          child: const Icon(
+            Icons.menu,
+            size: 20,
+            color: AppColors.textPrimary,
+          ),
+        ),
         actions: [
           if (authState.isAuthenticated) ...[
             _SyncPopupMenu(syncState: syncState),
