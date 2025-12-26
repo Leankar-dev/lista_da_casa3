@@ -13,7 +13,6 @@ class SecureStorageService {
     ),
   );
 
-  // Chaves para armazenamento
   static const String _userIdKey = 'user_id';
   static const String _userEmailKey = 'user_email';
   static const String _lastSyncKey = 'last_sync_timestamp';

@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 /// Este logger garante que informações sensíveis nunca sejam
 /// expostas em builds de produção.
 class AppLogger {
-  // Impede instanciação
   AppLogger._();
 
   /// Indica se os logs estão habilitados (apenas em debug mode)
@@ -69,8 +68,9 @@ class AppLogger {
     debugPrint('🌐 [Network] $message');
   }
 
-  /// Log para operações de autenticação
-  /// IMPORTANTE: Nunca logar tokens, senhas ou dados sensíveis
+  /// Log para operações de autenticação.
+  ///
+  /// Nunca logar tokens, senhas ou dados sensíveis.
   static void auth(String message) {
     if (!isEnabled) return;
     debugPrint('🔐 [Auth] $message');

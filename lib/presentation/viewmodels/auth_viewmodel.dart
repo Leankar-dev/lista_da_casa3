@@ -63,8 +63,6 @@ class AuthViewModel extends StateNotifier<AuthState> {
         email: email,
         password: password,
       );
-      // O authStateChanges listener já atualiza o user,
-      // então só precisamos atualizar o loading
       state = state.copyWith(isLoading: false, error: () => null);
       return result?.user != null;
     } catch (e) {

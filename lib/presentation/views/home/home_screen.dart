@@ -11,7 +11,6 @@ import '../markets/markets_screen.dart';
 import '../charts/charts_screen.dart';
 import '../auth/login_screen.dart';
 
-/// Provider para controlar o drawer da HomeScreen
 final homeScaffoldKeyProvider = Provider<GlobalKey<ScaffoldState>>((ref) {
   return GlobalKey<ScaffoldState>();
 });
@@ -97,13 +96,11 @@ class _HomeDrawer extends ConsumerWidget {
       child: SafeArea(
         child: Column(
           children: [
-            // Cabeçalho do Drawer
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(AppConstants.largePadding),
               child: Column(
                 children: [
-                  // Avatar neumórfico
                   Neumorphic(
                     style: const NeumorphicStyle(
                       depth: 4,
@@ -113,9 +110,7 @@ class _HomeDrawer extends ConsumerWidget {
                     child: Container(
                       width: 80,
                       height: 80,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: const Icon(
                         Icons.person,
                         size: 40,
@@ -124,7 +119,6 @@ class _HomeDrawer extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: AppConstants.defaultPadding),
-                  // Email do utilizador
                   if (authState.isAuthenticated && authState.user != null) ...[
                     Text(
                       authState.user!.email ?? '',
@@ -153,7 +147,6 @@ class _HomeDrawer extends ConsumerWidget {
 
             const Spacer(),
 
-            // Botão de Logout
             Padding(
               padding: const EdgeInsets.all(AppConstants.defaultPadding),
               child: NeumorphicButton(
@@ -172,11 +165,7 @@ class _HomeDrawer extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.logout,
-                      color: AppColors.error,
-                      size: 20,
-                    ),
+                    Icon(Icons.logout, color: AppColors.error, size: 20),
                     const SizedBox(width: AppConstants.smallPadding),
                     Text(
                       AppStrings.logout,
@@ -191,15 +180,13 @@ class _HomeDrawer extends ConsumerWidget {
               ),
             ),
 
-            // Versão da app
             Padding(
-              padding: const EdgeInsets.only(bottom: AppConstants.defaultPadding),
+              padding: const EdgeInsets.only(
+                bottom: AppConstants.defaultPadding,
+              ),
               child: Text(
                 AppStrings.byDeveloper,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
             ),
           ],
@@ -209,7 +196,6 @@ class _HomeDrawer extends ConsumerWidget {
   }
 
   Future<void> _handleLogout(BuildContext context, WidgetRef ref) async {
-    // Mostrar diálogo de confirmação primeiro (antes de fechar o drawer)
     final shouldLogout = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -233,7 +219,6 @@ class _HomeDrawer extends ConsumerWidget {
     );
 
     if (shouldLogout == true && context.mounted) {
-      // Fechar o drawer
       Navigator.of(context).pop();
 
       await ref.read(authViewModelProvider.notifier).signOut();

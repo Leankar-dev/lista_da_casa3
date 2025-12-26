@@ -186,19 +186,19 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            _buildPasswordRequirement(
-                              'Pelo menos 6 caracteres',
-                              _passwordController.text.length >= 6,
+                            _PasswordRequirement(
+                              text: 'Pelo menos 6 caracteres',
+                              isValid: _passwordController.text.length >= 6,
                             ),
-                            _buildPasswordRequirement(
-                              'Pelo menos uma letra maiúscula',
-                              _passwordController.text.contains(
+                            _PasswordRequirement(
+                              text: 'Pelo menos uma letra maiúscula',
+                              isValid: _passwordController.text.contains(
                                 RegExp(r'[A-Z]'),
                               ),
                             ),
-                            _buildPasswordRequirement(
-                              'Pelo menos um número',
-                              _passwordController.text.contains(
+                            _PasswordRequirement(
+                              text: 'Pelo menos um número',
+                              isValid: _passwordController.text.contains(
                                 RegExp(r'[0-9]'),
                               ),
                             ),
@@ -252,29 +252,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPasswordRequirement(String text, bool isValid) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: Row(
-        children: [
-          Icon(
-            isValid ? Icons.check_circle : Icons.circle_outlined,
-            size: 16,
-            color: isValid ? AppColors.success : AppColors.textSecondary,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 12,
-              color: isValid ? AppColors.success : AppColors.textSecondary,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -339,5 +316,39 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       return 'Erro de ligação à internet';
     }
     return 'Erro ao criar conta. Tente novamente.';
+  }
+}
+
+class _PasswordRequirement extends StatelessWidget {
+  final String text;
+  final bool isValid;
+
+  const _PasswordRequirement({
+    required this.text,
+    required this.isValid,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        children: [
+          Icon(
+            isValid ? Icons.check_circle : Icons.circle_outlined,
+            size: 16,
+            color: isValid ? AppColors.success : AppColors.textSecondary,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 12,
+              color: isValid ? AppColors.success : AppColors.textSecondary,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

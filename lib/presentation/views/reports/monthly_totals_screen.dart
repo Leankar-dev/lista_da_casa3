@@ -627,7 +627,6 @@ class _MonthlyTotalCard extends StatelessWidget {
                 ],
               ),
             ),
-            // Valor total
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
